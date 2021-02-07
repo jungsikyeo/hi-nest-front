@@ -8,7 +8,7 @@ import { FormError } from "../components/form-error";
 import spotifyLogo from "../images/spotify_logo.svg";
 import {
   createAccountMutation,
-  createAccountMutationVariables
+  createAccountMutationVariables,
 } from "../__generated__/createAccountMutation";
 import { UserRole } from "../__generated__/globalTypes";
 
@@ -33,13 +33,13 @@ export const CreateAccount = () => {
   >({
     mode: "onChange",
     defaultValues: {
-      role: UserRole.Listener
-    }
+      role: UserRole.Listener,
+    },
   });
   const history = useHistory();
   const onCompleted = (data: createAccountMutation) => {
     const {
-      createAccount: { ok }
+      createAccount: { ok },
     } = data;
     if (ok) {
       alert("Account Created! Log in now!");
@@ -48,11 +48,11 @@ export const CreateAccount = () => {
   };
   const [
     createAccountMutation,
-    { loading, data: createAccountMutationResult }
+    { loading, data: createAccountMutationResult },
   ] = useMutation<createAccountMutation, createAccountMutationVariables>(
     CREATE_ACCOUNT_MUTATION,
     {
-      onCompleted
+      onCompleted,
     }
   );
   const onSubmit = () => {
@@ -60,19 +60,25 @@ export const CreateAccount = () => {
       const { email, password, role } = getValues();
       createAccountMutation({
         variables: {
-          createAccountInput: { email, password, role }
-        }
+          createAccountInput: { email, password, role },
+        },
       });
     }
   };
 
   return (
-      <div className="h-screen flex items-center flex-col mt-2.5 md:mt-6 lg:mt-6">
+    <div className="h-screen flex items-center flex-col mt-2.5 md:mt-6 lg:mt-6">
       <Helmet>
         <title>Create Account | Podcast</title>
       </Helmet>
       <div className="w-full max-w-screen-2xl flex flex-col items-center border-b border-solid border-gray-300">
-        <img src={spotifyLogo} className="w-32 lg:w-48 md:w-48 mb-2.5 md:mb-6 lg:mb-6" alt="Spotify" />
+        <Link to="/">
+          <img
+            src={spotifyLogo}
+            className="w-32 lg:w-48 md:w-48 mb-2.5 md:mb-6 lg:mb-6"
+            alt="Spotify"
+          />
+        </Link>
       </div>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
         <h4 className="w-full pt-8 font-bold text-center text-base mb-5">
@@ -88,7 +94,7 @@ export const CreateAccount = () => {
           <input
             ref={register({
               required: "Email is required",
-              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
             name="email"
             required
@@ -144,7 +150,7 @@ export const CreateAccount = () => {
         </form>
         <div className="text-sm font-bold">
           계정이 있나요?{" "}
-          <Link to="/" className="text-green-700 underline">
+          <Link to="/login" className="text-green-700 underline">
             로그인하세요.
           </Link>
         </div>

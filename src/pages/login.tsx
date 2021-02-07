@@ -69,11 +69,13 @@ export const Login = () => {
         <title>Login | Podcast</title>
       </Helmet>
       <div className="w-full max-w-screen-2xl flex flex-col items-center border-b border-solid border-gray-300">
-        <img
-          src={spotifyLogo}
-          className="w-32 lg:w-48 md:w-48 mb-2.5 md:mb-6 lg:mb-6"
-          alt="Spotify"
-        />
+        <Link to="/">
+          <img
+            src={spotifyLogo}
+            className="w-32 lg:w-48 md:w-48 mb-2.5 md:mb-6 lg:mb-6"
+            alt="Spotify"
+          />
+        </Link>
       </div>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
         <h4 className="w-full pt-8 font-bold text-center text-base mb-5">

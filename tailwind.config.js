@@ -4,8 +4,13 @@ module.exports = {
   theme: {
     extend: {},
   },
+  fontFamily: {
+    sans: ["Graphik", "sans-serif"],
+    serif: ["Merriweather", "serif"],
+    hansans: ["Black Han Sans", "sans-serif"],
+  },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};

@@ -34,7 +34,6 @@ export const LoggedOutRouter = () => {
           <NotFound />
         </Route>
       </Switch>
-      <Footer />
     </Router>
   );
 };

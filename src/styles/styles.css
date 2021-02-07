@@ -545,6 +545,10 @@ video {
   height: auto;
 }
 
+.font-han-sans {
+  font-family: "Black Han Sans", sans-serif;
+}
+
 .container {
   width: 100%;
 }

@@ -10,7 +10,7 @@ import { LS_TOKEN } from "../constants";
 import spotifyLogo from "../images/spotify_logo.svg";
 import {
   loginMutation,
-  loginMutationVariables
+  loginMutationVariables,
 } from "../__generated__/loginMutation";
 
 const LOGIN_MUTATION = gql`
@@ -32,11 +32,11 @@ export const Login = () => {
   const { register, getValues, errors, handleSubmit, formState } = useForm<
     ILoginForm
   >({
-    mode: "onChange"
+    mode: "onChange",
   });
   const onCompleted = (data: loginMutation) => {
     const {
-      login: { ok, token }
+      login: { ok, token },
     } = data;
     if (ok && token) {
       localStorage.setItem(LS_TOKEN, token);
@@ -48,7 +48,7 @@ export const Login = () => {
     loginMutation,
     loginMutationVariables
   >(LOGIN_MUTATION, {
-    onCompleted
+    onCompleted,
   });
   const onSubmit = () => {
     if (!loading) {
@@ -57,36 +57,43 @@ export const Login = () => {
         variables: {
           loginInput: {
             email,
-            password
-          }
-        }
+            password,
+          },
+        },
       });
     }
   };
   return (
-    <div className="h-screen flex items-center flex-col mt-10">
+    <div className="h-screen flex items-center flex-col mt-2.5 md:mt-6 lg:mt-6">
       <Helmet>
         <title>Login | Podcast</title>
       </Helmet>
+      <div className="w-full max-w-screen-2xl flex flex-col items-center border-b border-solid border-gray-300">
+        <img
+          src={spotifyLogo}
+          className="w-32 lg:w-48 md:w-48 mb-2.5 md:mb-6 lg:mb-6"
+          alt="Spotify"
+        />
+      </div>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img src={spotifyLogo} className="w-36 mb-10 lg:w-52" alt="Spotify" />
-        <h4 className="w-full font-medium text-left text-3xl mb-5">
-          Welcome back
+        <h4 className="w-full pt-8 font-bold text-center text-base mb-5">
+          계속하려면 Spotify에 로그인하세요.
         </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-3 mt-5 w-full mb-5"
         >
+          <h4 className="w-full font-bold text-left text-sm">이메일 주소</h4>
           <input
             ref={register({
-              required: "Email is required",
-              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+              required: "Spotify 이메일 주소를 입력하세요.",
+              pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
             name="email"
             required
             type="email"
-            placeholder="Email"
-            className="focus:outline-none focus:border-gray-500 p-3 border-2  text-lg border-gray-200 transition-colors"
+            placeholder="이메일 주소"
+            className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
           />
           {errors.email?.message && (
             <FormError errorMessage={errors.email?.message} />
@@ -94,13 +101,14 @@ export const Login = () => {
           {errors.email?.type === "pattern" && (
             <FormError errorMessage={"Please enter a valid email"} />
           )}
+          <h4 className="w-full font-bold text-left text-sm">비밀번호</h4>
           <input
             ref={register({ required: "Password is required" })}
             required
             name="password"
             type="password"
-            placeholder="Password"
-            className="focus:outline-none focus:border-gray-500 p-3 border-2  text-lg border-gray-200 transition-colors"
+            placeholder="비밀번호"
+            className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password?.message} />
@@ -111,16 +119,21 @@ export const Login = () => {
           <Button
             canClick={formState.isValid}
             loading={loading}
-            actionText={"Log in"}
+            actionText={"로그인하기"}
           />
           {loginMutationResult?.login.error && (
             <FormError errorMessage={loginMutationResult.login.error} />
           )}
         </form>
-        <div>
-          New to Nuber?{" "}
-          <Link to="/create-account" className="text-lime-600 hover:underline">
-            Create an Account
+        <div className="w-full flex flex-col items-center">
+          <h4 className="w-full pt-4 font-bold text-center text-base mb-5">
+            계정이 없나요?
+          </h4>
+          <Link
+            to="/create-account"
+            className="w-full h-11 flex flex-col items-center justify-center border-2 border-solid rounded-3xl border-gray-500 font-bold text-gray-500 hover:bg-gray-500 hover:text-white transition-colors"
+          >
+            SPOTIFY에 가입하기
           </Link>
         </div>
       </div>

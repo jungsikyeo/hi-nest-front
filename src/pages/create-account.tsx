@@ -33,7 +33,7 @@ export const CreateAccount = () => {
   >({
     mode: "onChange",
     defaultValues: {
-      role: UserRole.Client
+      role: UserRole.Listener
     }
   });
   const history = useHistory();
@@ -67,19 +67,24 @@ export const CreateAccount = () => {
   };
 
   return (
-    <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
+      <div className="h-screen flex items-center flex-col mt-2.5 md:mt-6 lg:mt-6">
       <Helmet>
-        <title>Create Account | Nuber Eats</title>
+        <title>Create Account | Podcast</title>
       </Helmet>
+      <div className="w-full max-w-screen-2xl flex flex-col items-center border-b border-solid border-gray-300">
+        <img src={spotifyLogo} className="w-32 lg:w-48 md:w-48 mb-2.5 md:mb-6 lg:mb-6" alt="Spotify" />
+      </div>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
-        <img src={spotifyLogo} className="w-52 mb-10" alt="Spotify" />
-        <h4 className="w-full font-medium text-left text-3xl mb-5">
-          Let's get started
+        <h4 className="w-full pt-8 font-bold text-center text-base mb-5">
+          이메일 주소로 가입하기
         </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-3 mt-5 w-full mb-5"
         >
+          <h4 className="w-full font-bold text-left text-sm">
+            이메일이 어떻게 되시나요?
+          </h4>
           <input
             ref={register({
               required: "Email is required",
@@ -89,7 +94,7 @@ export const CreateAccount = () => {
             required
             type="email"
             placeholder="Email"
-            className="focus:outline-none focus:border-gray-500 p-3 border-2  text-lg border-gray-200 transition-colors"
+            className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
           />
           {errors.email?.message && (
             <FormError errorMessage={errors.email?.message} />
@@ -97,13 +102,16 @@ export const CreateAccount = () => {
           {errors.email?.type === "pattern" && (
             <FormError errorMessage={"Please enter a valid email"} />
           )}
+          <h4 className="w-full font-bold text-left text-sm">
+            비밀번호를 만드세요.
+          </h4>
           <input
             ref={register({ required: "Password is required" })}
             required
             name="password"
             type="password"
             placeholder="Password"
-            className="focus:outline-none focus:border-gray-500 p-3 border-2  text-lg border-gray-200 transition-colors"
+            className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
           />
           {errors.password?.message && (
             <FormError errorMessage={errors.password?.message} />
@@ -111,10 +119,13 @@ export const CreateAccount = () => {
           {errors.password?.type === "minLength" && (
             <FormError errorMessage="Password must be more than 10 chars." />
           )}
+          <h4 className="w-full font-bold text-left text-sm">
+            가입 유형을 선택하세요.
+          </h4>
           <select
             name="role"
             ref={register({ required: true })}
-            className="focus:outline-none focus:border-gray-500 p-3 border-2  text-lg border-gray-200 transition-colors"
+            className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
           >
             {Object.keys(UserRole).map((role, index) => (
               <option key={index}>{role}</option>
@@ -123,7 +134,7 @@ export const CreateAccount = () => {
           <Button
             canClick={formState.isValid}
             loading={loading}
-            actionText={"Create Account"}
+            actionText={"가입하기"}
           />
           {createAccountMutationResult?.createAccount.error && (
             <FormError
@@ -131,10 +142,10 @@ export const CreateAccount = () => {
             />
           )}
         </form>
-        <div>
-          Already have an account?{" "}
-          <Link to="/" className="text-lime-600 hover:underline">
-            Log in now
+        <div className="text-sm font-bold">
+          계정이 있나요?{" "}
+          <Link to="/" className="text-green-700 underline">
+            로그인하세요.
           </Link>
         </div>
       </div>

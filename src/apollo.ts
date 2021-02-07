@@ -24,6 +24,12 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+export const makeLogout = () => {
+  localStorage.removeItem(LS_TOKEN);
+  isLoggedInVar(false);
+  authTokenVar(null);
+};
+
 export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({

@@ -1,15 +1,15 @@
 import React from "react";
-import { Header } from "../../components/header";
 import { Helmet } from "react-helmet-async";
+import { Header } from "../components/header";
 
-export const Hosts = () => {
+export const Home = () => {
   return (
     <>
       <Helmet>
         <title>Host | Podcast</title>
       </Helmet>
       <Header />
-      <h1>Host Main</h1>
+      <h1>HOME Main</h1>
     </>
   );
 };

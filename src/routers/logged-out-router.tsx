@@ -1,10 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { NotFound } from "../pages/404";
-import { CreateAccount } from "../pages/create-account";
-import { Home } from "../pages/home";
-import { Login } from "../pages/login";
-import { Footer } from "../components/footer";
+import { NotFound } from "../pages/common/404";
+import { CreateAccount } from "../pages/common/create-account";
+import { Home } from "../pages/common/home";
+import { Login } from "../pages/common/login";
 
 const commonRoutes = [
   {

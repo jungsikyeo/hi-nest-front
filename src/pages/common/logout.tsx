@@ -1,7 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { makeLogout } from "../apollo";
+import { makeLogout } from "../../apollo";
 
 export const Logout = () => {
   const history = useHistory();

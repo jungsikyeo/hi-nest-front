@@ -2,5 +2,8 @@
 .font-han-sans {
   font-family: "Black Han Sans", sans-serif;
 }
+.font-do-hyeon{
+  font-family: 'Do Hyeon', sans-serif;
+}
 @tailwind components;
 @tailwind utilities;

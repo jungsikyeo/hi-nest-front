@@ -1,10 +1,10 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { Header } from "../components/header";
-import circles from "../images/circles.svg";
-import apple from "../images/apple.svg";
-import google from "../images/google.svg";
-import { Footer } from "../components/footer";
+import { Header } from "../../components/header";
+import circles from "../../images/circles.svg";
+import apple from "../../images/apple.svg";
+import google from "../../images/google.svg";
+import { Footer } from "../../components/footer";
 
 export const Home = () => {
   return (
@@ -17,7 +17,7 @@ export const Home = () => {
         <div
           className="w-full px-5 pt-14 text-4xl font-bold text-white"
           style={{
-            fontFamily: "font-han-sans",
+            fontFamily: "font-do-hyeon",
             fontWeight: 900,
           }}
         >
@@ -50,7 +50,7 @@ export const Home = () => {
           </span>
         </div>
         <div
-          className="absolute top-0 w-screen bg-gradient-to-b from-red-400 to-yellow-400"
+          className="absolute top-0 flex flex-col items-center w-screen bg-gradient-to-b from-red-400 to-yellow-400"
           style={{ zIndex: -1 }}
         >
           <div className="h-auto px-20" style={{ width: "900px" }}>

@@ -1,40 +1,43 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Footer } from "../components/footer";
 import { useMe } from "../hooks/useMe";
-import { Hosts } from "../pages/client/hosts";
-import { Listeners } from "../pages/client/listeners";
-import { NotFound } from "../pages/404";
+import { HostHome } from "../pages/host/host-home";
+import { ListenerHome } from "../pages/listener/listener-home";
+import { NotFound } from "../pages/common/404";
 import { UserRole } from "../__generated__/globalTypes";
-import {Logout} from "../pages/logout";
+import { Logout } from "../pages/common/logout";
 
 const hostRoutes = [
   {
     path: "/",
-    component: <Hosts />,
+    component: <HostHome />,
   },
   {
     path: "/login",
-    component: <Hosts />,
+    component: <HostHome />,
   },
   {
     path: "/hosts",
-    component: <Hosts />,
+    component: <HostHome />,
+  },
+  {
+    path: "/search",
+    component: <HostHome />,
   },
 ];
 
 const listenerRoutes = [
   {
     path: "/",
-    component: <Listeners />,
+    component: <ListenerHome />,
   },
   {
     path: "/login",
-    component: <Listeners />,
+    component: <ListenerHome />,
   },
   {
     path: "/listeners",
-    component: <Listeners />,
+    component: <ListenerHome />,
   },
 ];
 
@@ -69,7 +72,6 @@ export const LoggedInRouter = () => {
           <NotFound />
         </Route>
       </Switch>
-      <Footer />
     </Router>
   );
 };

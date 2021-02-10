@@ -1,7 +1,7 @@
 import React from "react";
 import { Header } from "../../components/header";
 
-export const Listeners = () => {
+export const ListenerHome = () => {
   return (
     <>
       <Header />

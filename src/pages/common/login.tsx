@@ -2,74 +2,71 @@ import { gql, useMutation } from "@apollo/client";
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
-import { Button } from "../components/button";
-import { FormError } from "../components/form-error";
-import spotifyLogo from "../images/spotify_logo.svg";
+import { Link } from "react-router-dom";
+import { authTokenVar, isLoggedInVar } from "../../apollo";
+import { Button } from "../../components/button";
+import { FormError } from "../../components/form-error";
+import { LS_TOKEN } from "../../constants";
+import spotifyLogo from "../../images/spotify_logo.svg";
 import {
-  createAccountMutation,
-  createAccountMutationVariables,
-} from "../__generated__/createAccountMutation";
-import { UserRole } from "../__generated__/globalTypes";
+  loginMutation,
+  loginMutationVariables,
+} from "../../__generated__/loginMutation";
 
-const CREATE_ACCOUNT_MUTATION = gql`
-  mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
-    createAccount(input: $createAccountInput) {
+const LOGIN_MUTATION = gql`
+  mutation loginMutation($loginInput: LoginInput!) {
+    login(input: $loginInput) {
       ok
+      token
       error
     }
   }
 `;
 
-interface ICreateAccountForm {
+interface ILoginForm {
   email: string;
   password: string;
-  role: UserRole;
 }
 
-export const CreateAccount = () => {
+export const Login = () => {
   const { register, getValues, errors, handleSubmit, formState } = useForm<
-    ICreateAccountForm
+    ILoginForm
   >({
     mode: "onChange",
-    defaultValues: {
-      role: UserRole.Listener,
-    },
   });
-  const history = useHistory();
-  const onCompleted = (data: createAccountMutation) => {
+  const onCompleted = (data: loginMutation) => {
     const {
-      createAccount: { ok },
+      login: { ok, token },
     } = data;
-    if (ok) {
-      alert("Account Created! Log in now!");
-      history.push("/");
+    if (ok && token) {
+      localStorage.setItem(LS_TOKEN, token);
+      authTokenVar(token);
+      isLoggedInVar(true);
     }
   };
-  const [
-    createAccountMutation,
-    { loading, data: createAccountMutationResult },
-  ] = useMutation<createAccountMutation, createAccountMutationVariables>(
-    CREATE_ACCOUNT_MUTATION,
-    {
-      onCompleted,
-    }
-  );
+  const [loginMutation, { data: loginMutationResult, loading }] = useMutation<
+    loginMutation,
+    loginMutationVariables
+  >(LOGIN_MUTATION, {
+    onCompleted,
+  });
   const onSubmit = () => {
     if (!loading) {
-      const { email, password, role } = getValues();
-      createAccountMutation({
+      const { email, password } = getValues();
+      loginMutation({
         variables: {
-          createAccountInput: { email, password, role },
+          loginInput: {
+            email,
+            password,
+          },
         },
       });
     }
   };
-
   return (
     <div className="h-screen flex items-center flex-col mt-2.5 md:mt-6 lg:mt-6">
       <Helmet>
-        <title>Create Account | Podcast</title>
+        <title>Login | Podcast</title>
       </Helmet>
       <div className="w-full max-w-screen-2xl flex flex-col items-center border-b border-solid border-gray-300">
         <Link to="/">
@@ -82,24 +79,22 @@ export const CreateAccount = () => {
       </div>
       <div className="w-full max-w-screen-sm flex flex-col px-5 items-center">
         <h4 className="w-full pt-8 font-bold text-center text-base mb-5">
-          이메일 주소로 가입하기
+          계속하려면 Spotify에 로그인하세요.
         </h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-3 mt-5 w-full mb-5"
         >
-          <h4 className="w-full font-bold text-left text-sm">
-            이메일이 어떻게 되시나요?
-          </h4>
+          <h4 className="w-full font-bold text-left text-sm">이메일 주소</h4>
           <input
             ref={register({
-              required: "Email is required",
+              required: "Spotify 이메일 주소를 입력하세요.",
               pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             })}
             name="email"
             required
             type="email"
-            placeholder="Email"
+            placeholder="이메일 주소"
             className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
           />
           {errors.email?.message && (
@@ -108,15 +103,13 @@ export const CreateAccount = () => {
           {errors.email?.type === "pattern" && (
             <FormError errorMessage={"Please enter a valid email"} />
           )}
-          <h4 className="w-full font-bold text-left text-sm">
-            비밀번호를 만드세요.
-          </h4>
+          <h4 className="w-full font-bold text-left text-sm">비밀번호</h4>
           <input
             ref={register({ required: "Password is required" })}
             required
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder="비밀번호"
             className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
           />
           {errors.password?.message && (
@@ -125,33 +118,24 @@ export const CreateAccount = () => {
           {errors.password?.type === "minLength" && (
             <FormError errorMessage="Password must be more than 10 chars." />
           )}
-          <h4 className="w-full font-bold text-left text-sm">
-            가입 유형을 선택하세요.
-          </h4>
-          <select
-            name="role"
-            ref={register({ required: true })}
-            className="focus:outline-none focus:border-gray-500 p-2 border border-gray-300 text-sm font-bold border-gray-200 transition-colors"
-          >
-            {Object.keys(UserRole).map((role, index) => (
-              <option key={index}>{role}</option>
-            ))}
-          </select>
           <Button
             canClick={formState.isValid}
             loading={loading}
-            actionText={"가입하기"}
+            actionText={"로그인하기"}
           />
-          {createAccountMutationResult?.createAccount.error && (
-            <FormError
-              errorMessage={createAccountMutationResult.createAccount.error}
-            />
+          {loginMutationResult?.login.error && (
+            <FormError errorMessage={loginMutationResult.login.error} />
           )}
         </form>
-        <div className="text-sm font-bold">
-          계정이 있나요?{" "}
-          <Link to="/login" className="text-green-700 underline">
-            로그인하세요.
+        <div className="w-full flex flex-col items-center">
+          <h4 className="w-full pt-4 font-bold text-center text-base mb-5">
+            계정이 없나요?
+          </h4>
+          <Link
+            to="/create-account"
+            className="w-full h-11 flex flex-col items-center justify-center border-2 border-solid rounded-3xl border-gray-500 font-bold text-gray-500 hover:bg-gray-500 hover:text-white transition-colors"
+          >
+            SPOTIFY에 가입하기
           </Link>
         </div>
       </div>

@@ -46,7 +46,7 @@ export const Search = (props: any) => {
           <FontAwesomeIcon icon={faSearch} className="text-black fixed ml-3" />
           <input
             type="text"
-            placeholder="아티스트, 곡 또는 팟캐스트를 검색하세요"
+            placeholder="카테고리명 또는 팟캐스트를 검색하세요"
             onChange={props.handleOnchange}
             className="w-full w-auto h-10 rounded-3xl text-sm outline-none text-left text-black overflow-ellipsis pl-10"
           />

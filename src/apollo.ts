@@ -13,7 +13,7 @@ export const authTokenVar = makeVar(token);
 
 const httpLink = createHttpLink({
   //uri: "https://nuber-eats-yjs-backend.herokuapp.com/graphql"
-  uri: "http://localhost:4000/graphql",
+  uri: "https://7ytk5.sse.codesandbox.io/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

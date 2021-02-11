@@ -28,6 +28,10 @@ const hostRoutes = [
     path: "/podcasts/:id",
     component: <HostHome />,
   },
+  {
+    path: "/my-profile",
+    component: <HostHome />,
+  },
 ];
 
 const listenerRoutes = [

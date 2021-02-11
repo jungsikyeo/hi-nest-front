@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { faHome, faSearch, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet-async";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import spotifyLogoWhite from "../../images/spotify_logo_white.svg";
 import { Search } from "../../components/search";
 import { MyPodcasts } from "../../components/my-podcasts";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { PODCAST_FRAGMENT } from "../../fragments";
-import {
-  createPodcast,
-  createPodcastVariables,
-} from "../../__generated__/createPodcast";
 import { EditPodcast } from "../../components/edit-podcast";
 
 const PODCAST_QUERY = gql`
@@ -37,60 +33,12 @@ const CREATE_PODCAST = gql`
   ${PODCAST_FRAGMENT}
 `;
 
-interface IPodcast {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
-}
-
 export const HostHome = () => {
   let { data: podcasts } = useQuery(PODCAST_QUERY);
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
-  const [state, setState] = useState("");
+  const [searchText, setSearchText] = useState("");
 
-  const matchName = (name: string, keyword: string) => {
-    const keyLen = keyword.length;
-    name = name.toLowerCase().substring(0, keyLen);
-    //returns true only if we have a match and keyword isn't empty
-    return name == keyword && keyLen != 0;
-  };
-
-  const handleSearchText = (e: any) => {
-    let searchText = e.target.value;
-    let podcastFilter: [IPodcast] = podcasts?.myPodcasts.podcasts.filter(
-      (podcast: IPodcast) => {
-        //console.log(podcast.title, searchText)
-        return podcast.title.toLocaleLowerCase().indexOf(searchText.toLowerCase()) > -1
-      }
-    );
-    console.log(podcastFilter)
-    podcasts.myPodcasts.podcasts = podcastFilter;
-  };
-
-  /*
-  const history = useHistory();
-  const [callQuery, { loading, data, called }] = useLazyQuery<
-    createPodcast,
-    createPodcastVariables
-  >(CREATE_PODCAST);
-  useEffect(() => {
-    const [_, query] = location.search.split("?term=");
-    if (!query) {
-      return history.replace("/");
-    }
-    callQuery({
-      variables: {
-        input: {
-          title: "",
-          category: "",
-          description: "",
-        },
-      },
-    });
-  }, [history, location]);
-  */
   return (
     <div className="bg-gradient-to-br from-gray-900 to-black text-gray-500">
       <Helmet>
@@ -134,14 +82,14 @@ export const HostHome = () => {
           </div>
           <div className="px-5 pt-5 pb-3">
             <span className="text-xs text-white tracking-wider">
-              플레이리스트
+              팟캐스트
             </span>
           </div>
           <a className="flex items-center hover:text-white cursor-pointer mx-5 pb-3 mb-3 border-b border-solid border-gray-500 border-opacity-40">
             <span className="mr-3 bg-gray-100 bg-opacity-30 w-7 h-7 rounded-sm flex items-center justify-center">
               <FontAwesomeIcon icon={faPlus} className="text-black" />
             </span>
-            <span className="text-sm">플레이리스트 만들기</span>
+            <span className="text-sm">팟캐스트 만들기</span>
           </a>
           <div className="text-white text-sm flex flex-col">
             {podcasts?.myPodcasts.podcasts?.map((podcast: any) => (
@@ -160,13 +108,13 @@ export const HostHome = () => {
           style={{ paddingLeft: "230px" }}
         >
           <div className="w-full fixed h-14 text-white px-10 bg-gray-900 bg-opacity-95">
-            <Search handleOnchange={handleSearchText} />
+            <Search handleOnchange={setSearchText} />
           </div>
           <div className="w-full overflow-y-auto">
             {path === "podcasts" ? (
               <EditPodcast data={{ podcasts, paramId }} />
             ) : (
-              <MyPodcasts data={podcasts} />
+              <MyPodcasts data={podcasts} text={searchText} />
             )}
           </div>
         </div>

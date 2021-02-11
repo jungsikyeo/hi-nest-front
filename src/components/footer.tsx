@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useMe } from "../hooks/useMe";
 import spotifyLogoWhite from "../images/spotify_logo_white.svg";
 import instagramIcon from "../images/instagram_icon.svg";
 import facebookIcon from "../images/facebook_icon.svg";

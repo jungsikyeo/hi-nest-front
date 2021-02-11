@@ -33,6 +33,19 @@ const CREATE_PODCAST = gql`
   ${PODCAST_FRAGMENT}
 `;
 
+const GET_EPISODES = gql`
+  mutation getEpisodes($input: PodcastSearchInput!) {
+    getEpisodes(input: $input) {
+      error
+      ok
+      episodes {
+        ...EpisodeParts
+      }
+    }
+  }
+  ${EPISODE_FRAGMENT}
+`;
+
 export const HostHome = () => {
   let { data: podcasts } = useQuery(PODCAST_QUERY);
   const location = useLocation();
@@ -81,9 +94,7 @@ export const HostHome = () => {
             </Link>
           </div>
           <div className="px-5 pt-5 pb-3">
-            <span className="text-xs text-white tracking-wider">
-              팟캐스트
-            </span>
+            <span className="text-xs text-white tracking-wider">팟캐스트</span>
           </div>
           <a className="flex items-center hover:text-white cursor-pointer mx-5 pb-3 mb-3 border-b border-solid border-gray-500 border-opacity-40">
             <span className="mr-3 bg-gray-100 bg-opacity-30 w-7 h-7 rounded-sm flex items-center justify-center">

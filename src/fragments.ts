@@ -8,3 +8,12 @@ export const PODCAST_FRAGMENT = gql`
     description
   }
 `;
+
+export const EPISODE_FRAGMENT = gql`
+  fragment EpisodeParts on Episode {
+    id
+    title
+    category
+    imageUrl
+  }
+`;

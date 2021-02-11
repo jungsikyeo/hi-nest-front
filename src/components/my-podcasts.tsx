@@ -3,7 +3,7 @@ import { Podcast } from "./podcast";
 
 export const MyPodcasts = (props: any) => {
   return (
-    <div className="w-full mb-32">
+    <div className="w-full mb-32 pt-20 px-10">
       <div className="text-white font-bold text-2xl pb-5">
         <span>내 라이브러리</span>
       </div>

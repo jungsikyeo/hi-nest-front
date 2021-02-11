@@ -18,14 +18,15 @@ export interface CreateAccountInput {
   role?: UserRole | null;
 }
 
+export interface CreatePodcastInput {
+  title: string;
+  category: string;
+  description?: string | null;
+}
+
 export interface LoginInput {
   email: string;
   password: string;
-}
-
-export interface SearchPodcastInput {
-  page?: number | null;
-  titleSearch?: string | null;
 }
 
 //==============================================================

@@ -11,7 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useHistory } from "react-router-dom";
 
-export const Search = () => {
+export const Search = (props: any) => {
   const history = useHistory();
   const back = () => {
     history.goBack();
@@ -47,6 +47,7 @@ export const Search = () => {
           <input
             type="text"
             placeholder="아티스트, 곡 또는 팟캐스트를 검색하세요"
+            onChange={props.handleOnchange}
             className="w-full w-auto h-10 rounded-3xl text-sm outline-none text-left text-black overflow-ellipsis pl-10"
           />
         </div>

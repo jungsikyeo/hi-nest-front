@@ -6,7 +6,7 @@ import { Header } from "../../components/header";
 export const NotFound = () => (
   <>
     <Header />
-    <div className="bg-pink-200 min-h-screen flex flex-col text-center pt-8">
+    <div className="bg-pink-200 min-h-screen flex flex-col text-center pt-8 md:pb-32 xl:pb-40">
       <div className="mr-auto ml-auto pl-3 pr-3 pb-10">
         <div className="flex flex-col md:flex-row">
           <div className="flex flex-col items-center">
@@ -40,7 +40,7 @@ export const NotFound = () => (
           </div>
         </div>
       </div>
-      <Footer />
     </div>
+    <Footer />
   </>
 );

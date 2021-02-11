@@ -6,7 +6,6 @@ import instagramIcon from "../images/instagram_icon.svg";
 import facebookIcon from "../images/facebook_icon.svg";
 
 export const Footer: React.FC = () => {
-  const { data } = useMe();
   const detailInfo = () => {
     alert("비밀~ ^.^;");
   };
@@ -14,7 +13,7 @@ export const Footer: React.FC = () => {
     alert("힝 속았지~? ^.~");
   };
   return (
-    <footer className="bg-black">
+    <footer className="bg-black xl:w-full xl:bottom-0 xl:fixed">
       <div className="w-full px-3 py-16 xl:px-0 flex flex-col items-start sm:flex-col sm:items-start lg:flex-row lg:justify-around">
         <Link to="/" className="mb-12 md:px-20">
           <div className="text-sm flex items-center">

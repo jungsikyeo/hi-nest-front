@@ -29,6 +29,13 @@ export interface LoginInput {
   password: string;
 }
 
+export interface UpdatePodcastInput {
+  id: number;
+  title: string;
+  category: string;
+  description?: string | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

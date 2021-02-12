@@ -7,12 +7,21 @@
 // GraphQL query operation: PodcastQuery
 // ====================================================
 
+export interface PodcastQuery_myPodcasts_podcasts_episodes {
+  __typename: "Episode";
+  id: number;
+  title: string;
+  category: string;
+  imageUrl: string | null;
+}
+
 export interface PodcastQuery_myPodcasts_podcasts {
   __typename: "Podcast";
   id: number;
   title: string;
   category: string;
   description: string | null;
+  episodes: PodcastQuery_myPodcasts_podcasts_episodes[];
 }
 
 export interface PodcastQuery_myPodcasts {

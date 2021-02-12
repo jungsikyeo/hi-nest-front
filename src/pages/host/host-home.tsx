@@ -22,7 +22,7 @@ const PODCAST_QUERY = gql`
   }
   ${PODCAST_FRAGMENT}
 `;
-const CREATE_PODCAST = gql`
+const CREATE_PODCAST_MUTATION = gql`
   mutation createPodcast($input: CreatePodcastInput!) {
     createPodcast(input: $input) {
       error
@@ -31,19 +31,6 @@ const CREATE_PODCAST = gql`
     }
   }
   ${PODCAST_FRAGMENT}
-`;
-
-const GET_EPISODES = gql`
-  mutation getEpisodes($input: PodcastSearchInput!) {
-    getEpisodes(input: $input) {
-      error
-      ok
-      episodes {
-        ...EpisodeParts
-      }
-    }
-  }
-  ${EPISODE_FRAGMENT}
 `;
 
 export const HostHome = () => {
@@ -121,7 +108,7 @@ export const HostHome = () => {
           <div className="w-full fixed h-14 text-white px-10 bg-gray-900 bg-opacity-95">
             <Search handleOnchange={setSearchText} />
           </div>
-          <div className="w-full overflow-y-auto">
+          <div className="w-full overflow-y-auto bg-gray-900 bg-opacity-90">
             {path === "podcasts" ? (
               <EditPodcast data={{ podcasts, paramId }} />
             ) : (

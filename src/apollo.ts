@@ -6,14 +6,32 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { LS_TOKEN } from "./constants";
+import { WebSocketLink } from "@apollo/client/link/ws";
 
 const token = localStorage.getItem(LS_TOKEN);
 export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
 
+/*
+const wsLink = new WebSocketLink({
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "wss://nuber-eats-yjs-backend.herokuapp.com/graphql"
+      : "ws://localhost:4000/graphql",
+  options: {
+    reconnection: true,
+    connectionParams: {
+      "x-jwt": authTokenVar() || "",
+    },
+  },
+});
+ */
+
 const httpLink = createHttpLink({
-  //uri: "https://nuber-eats-yjs-backend.herokuapp.com/graphql"
-  uri: "https://7ytk5.sse.codesandbox.io/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://nuber-eats-yjs-backend.herokuapp.com/graphql"
+      : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

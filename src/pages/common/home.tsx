@@ -1,10 +1,10 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { Header } from "../../components/header";
+import { Header } from "./header";
 import circles from "../../images/circles.svg";
 import apple from "../../images/apple.svg";
 import google from "../../images/google.svg";
-import { Footer } from "../../components/footer";
+import { Footer } from "./footer";
 
 export const Home = () => {
   return (

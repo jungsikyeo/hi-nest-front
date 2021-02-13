@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import spotifyLogoWhite from "../images/spotify_logo_white.svg";
-import instagramIcon from "../images/instagram_icon.svg";
-import facebookIcon from "../images/facebook_icon.svg";
+import spotifyLogoWhite from "../../images/spotify_logo_white.svg";
+import instagramIcon from "../../images/instagram_icon.svg";
+import facebookIcon from "../../images/facebook_icon.svg";
 
 export const Footer: React.FC = () => {
   const detailInfo = () => {

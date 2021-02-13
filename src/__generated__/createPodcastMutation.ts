@@ -6,20 +6,20 @@
 import { CreatePodcastInput } from "./globalTypes";
 
 // ====================================================
-// GraphQL mutation operation: createPodcast
+// GraphQL mutation operation: createPodcastMutation
 // ====================================================
 
-export interface createPodcast_createPodcast {
+export interface createPodcastMutation_createPodcast {
   __typename: "CreatePodcastOutput";
   error: string | null;
   ok: boolean;
   id: number | null;
 }
 
-export interface createPodcast {
-  createPodcast: createPodcast_createPodcast;
+export interface createPodcastMutation {
+  createPodcast: createPodcastMutation_createPodcast;
 }
 
-export interface createPodcastVariables {
-  input: CreatePodcastInput;
+export interface createPodcastMutationVariables {
+  createPodcastInput: CreatePodcastInput;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import podcastDefault from "../images/podcast_default.svg";
+import podcastDefault from "../../images/podcast_default.svg";
 
 export const Episodes = (props: any) => {
   const episode = props.data.episode;

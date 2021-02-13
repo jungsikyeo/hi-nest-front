@@ -7,8 +7,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMe } from "../hooks/useMe";
-import spotifyLogoWhite from "../images/spotify_logo_white.svg";
+import { useMe } from "../../hooks/useMe";
+import spotifyLogoWhite from "../../images/spotify_logo_white.svg";
 
 export const Header: React.FC = () => {
   const { data } = useMe();

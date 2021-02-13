@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import podcastDefault from "../images/podcast_default.svg";
+import podcastDefault from "../../images/podcast_default.svg";
 
 interface IPodcastProps {
   id: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Header } from "../../components/header";
+import { Header } from "../common/header";
 
 export const ListenerHome = () => {
   return (

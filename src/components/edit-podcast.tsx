@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import podcastDefault from "../images/podcast_default.svg";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,11 +6,14 @@ import { Button } from "./button";
 import { FormError } from "./form-error";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   updatePodcastMutation,
   updatePodcastMutationVariables,
 } from "../__generated__/updatePodcastMutation";
+import { useState } from "react";
+import { PODCAST_QUERY } from "../pages/host/host-home";
+import { Episodes } from "./episodes";
 
 interface IPodcast {
   id: number;
@@ -41,24 +44,24 @@ export const EditPodcast = (props: any) => {
     (podcast: IPodcast) => podcast.id === +props.data.paramId
   );
 
-  const { register, getValues, errors, handleSubmit, formState } = useForm<
+  const { register, getValues, handleSubmit, formState } = useForm<
     IUpdatePodcastForm
   >({
     mode: "onChange",
     defaultValues: {
+      id: podcast.id,
       title: podcast.title,
       category: podcast.category,
       description: podcast.description,
     },
   });
   const history = useHistory();
-  const location = useLocation();
   const onCompleted = (data: updatePodcastMutation) => {
     const {
       updatePodcast: { ok },
     } = data;
     if (ok) {
-      history.push(location.pathname);
+      history.push("/");
     }
   };
   const [
@@ -68,11 +71,13 @@ export const EditPodcast = (props: any) => {
     UPDATE_PODCAST_MUTATION,
     {
       onCompleted,
+      refetchQueries: [{ query: PODCAST_QUERY }],
     }
   );
   const onSubmit = () => {
     if (!loading) {
-      const { id, title, category, description } = getValues();
+      let { id, title, category, description } = getValues();
+      id = +id;
       updatePodcastMutation({
         variables: {
           updatePodcastInput: { id, title, category, description },
@@ -110,54 +115,26 @@ export const EditPodcast = (props: any) => {
       <div>
         <div className="w-full">
           <div className="flex flex-col">
-            <section
-              className="grid gap-4 grid-cols-4 text-xs h-15 border-b border-solid border-gray-700 border-opacity-50 pb-2"
-              style={{
-                gridTemplateColumns:
-                  "[index] 16px [first] 6fr [var1] 4fr [last] minmax(120px,1fr)",
-              }}
-            >
-              <span className="pl-5">#</span>
-              <span>제목</span>
-              <span>앨범</span>
-              <span>재생시간</span>
-            </section>
-            {podcast?.episodes.map((episode: any, index: number) => (
+            {podcast?.episodes.length > 0 ? (
               <section
-                key={episode.id}
-                className={`
-                  grid gap-4 grid-cols-4 
-                  h-15 
-                  text-sm 
-                  hover:border hover:border-gray-500 hover:border-opacity-90 
-                  hover:bg-gray-500 hover:bg-opacity-20 rounded-md pl-5 py-2 ${
-                    index === 0 ? `mt-5` : ``
-                  }`}
+                className="grid gap-4 grid-cols-4 text-xs h-15 border-b border-solid border-gray-700 border-opacity-50 pb-2"
                 style={{
                   gridTemplateColumns:
                     "[index] 16px [first] 6fr [var1] 4fr [last] minmax(120px,1fr)",
                 }}
               >
-                <span className="flex items-center">{++index}</span>
-                <div className="flex items-center">
-                  {episode.imageUrl ? (
-                    <img
-                      src={episode.imageUrl}
-                      className="w-10 h-10"
-                      alt="thumnail"
-                    />
-                  ) : (
-                    <img
-                      src={podcastDefault}
-                      className="w-10 h-10 bg-gray-700"
-                      alt="thumnail"
-                    />
-                  )}
-                  <span className="text-white pl-3">{episode.title}</span>
-                </div>
-                <span className="flex items-center">{episode.category}</span>
-                <span className="flex items-center">3:00</span>
+                <span className="pl-5">#</span>
+                <span>제목</span>
+                <span>앨범</span>
+                <span>재생시간</span>
               </section>
+            ) : (
+              <section className="h-15 text-2xl text-white font-medium pl-5 py-2 mt-5">
+                <span>플레이리스트에 추가할 곡을 찾아보세요</span>
+              </section>
+            )}
+            {podcast?.episodes.map((episode: any, index: number) => (
+              <Episodes data={{episode, index}}/>
             ))}
           </div>
         </div>
@@ -166,7 +143,7 @@ export const EditPodcast = (props: any) => {
         <div className="absolute top-0 left-0 right-0 bottom-0 w-full h-screen">
           <div className="w-full h-screen bg-black bg-opacity-80"></div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <input type="hidden" name="id" value={podcast.id} />
+            <input type="hidden" name="id" ref={register} />
             <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
               <div
                 className="flex flex-col text-white rounded-xl"
@@ -261,6 +238,7 @@ export const EditPodcast = (props: any) => {
                       <textarea
                         className="resize-none w-full h-full outline-none rounded-md text-xs p-3"
                         name="description"
+                        ref={register}
                         style={{
                           background: "hsla(0,0%,100%,.1)",
                           backgroundColor:
@@ -271,13 +249,7 @@ export const EditPodcast = (props: any) => {
                   </div>
                 </div>
                 <div className="w-full h-1/5 px-5 flex justify-between">
-                  <div className="w-7/12 bg-blue-500">
-                    {errors.title?.message && (
-                      <FormError errorMessage={errors.title?.message} />
-                    )}
-                    {errors.category?.message && (
-                      <FormError errorMessage={errors.category?.message} />
-                    )}
+                  <div className="w-1/2 text-white">
                     {updatePodcastMutationResult?.updatePodcast.error && (
                       <FormError
                         errorMessage={
@@ -286,7 +258,7 @@ export const EditPodcast = (props: any) => {
                       />
                     )}
                   </div>
-                  <div className="w-auto flex items-center justify-end bg-red-500">
+                  <div className="w-1/2 pl-5 flex items-center justify-end">
                     <Button
                       canClick={formState.isValid}
                       loading={loading}

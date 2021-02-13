@@ -10,7 +10,7 @@ import { gql, useQuery } from "@apollo/client";
 import { PODCAST_FRAGMENT } from "../../fragments";
 import { EditPodcast } from "../../components/edit-podcast";
 
-const PODCAST_QUERY = gql`
+export const PODCAST_QUERY = gql`
   query PodcastQuery {
     myPodcasts {
       ok
@@ -89,7 +89,7 @@ export const HostHome = () => {
             </span>
             <span className="text-sm">팟캐스트 만들기</span>
           </a>
-          <div className="text-white text-sm flex flex-col">
+          <div className="overflow-auto h-full text-white text-sm flex flex-col">
             {podcasts?.myPodcasts.podcasts?.map((podcast: any) => (
               <Link
                 to={`/podcasts/${podcast.id}`}

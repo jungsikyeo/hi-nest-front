@@ -7,7 +7,7 @@ module.exports = {
       //url: "https://7ytk5.sse.codesandbox.io/graphql"
       url:
           process.env.NODE_ENV === "production"
-              ? "https://hi-nest-yjs-backend.herokuapp.com/graphql"
+              ? "https://nuber-eats-yjs-backend.herokuapp.com/graphql"
               : "http://localhost:4000/graphql",
     }
   }

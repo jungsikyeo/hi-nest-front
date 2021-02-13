@@ -29,6 +29,10 @@ export interface LoginInput {
   password: string;
 }
 
+export interface PodcastSearchInput {
+  id: number;
+}
+
 export interface UpdatePodcastInput {
   id: number;
   title: string;

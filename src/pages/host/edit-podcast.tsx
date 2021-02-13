@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import podcastDefault from "../../images/podcast_default.svg";
-import { FormError } from "../../components/form-error";
 import { Button } from "../../components/button";
 import { useForm } from "react-hook-form";
 import { IUpdatePodcastForm, PODCAST_QUERY } from "./host-home";
@@ -12,6 +11,10 @@ import {
   updatePodcastMutation,
   updatePodcastMutationVariables,
 } from "../../__generated__/updatePodcastMutation";
+import {
+  deletePodcastMutation,
+  deletePodcastMutationVariables,
+} from "../../__generated__/deletePodcastMutation";
 
 const UPDATE_PODCAST_MUTATION = gql`
   mutation updatePodcastMutation($updatePodcastInput: UpdatePodcastInput!) {
@@ -21,10 +24,17 @@ const UPDATE_PODCAST_MUTATION = gql`
     }
   }
 `;
+const DELETE_PODCAST_MUTATION = gql`
+  mutation deletePodcastMutation($deletePodcastInput: PodcastSearchInput!) {
+    deletePodcast(input: $deletePodcastInput) {
+      error
+      ok
+    }
+  }
+`;
 
 export const EditPodcast = (props: any) => {
   const podcast = props.podcast;
-  console.log(podcast);
   const history = useHistory();
   const onCompleted = (data: updatePodcastMutation) => {
     const {
@@ -36,7 +46,7 @@ export const EditPodcast = (props: any) => {
   };
   const [
     updatePodcastMutation,
-    { loading, data: updatePodcastMutationResult },
+    { loading },
   ] = useMutation<updatePodcastMutation, updatePodcastMutationVariables>(
     UPDATE_PODCAST_MUTATION,
     {
@@ -55,9 +65,44 @@ export const EditPodcast = (props: any) => {
       });
     }
   };
+  const onDeletePodcast = () => {
+    if (
+      window.confirm("플레이리스트 및 노래가 모두 삭제됩니다.\n삭제하시겠습니까? ")
+    ) {
+      onDeleteSubmit();
+    }
+  };
+  const onDeleteCompleted = (data: deletePodcastMutation) => {
+    const {
+      deletePodcast: { ok },
+    } = data;
+    if (ok) {
+      history.push("/");
+    }
+  };
+  const [
+    deletePodcastMutation,
+    { loading: loadingDelete },
+  ] = useMutation<deletePodcastMutation, deletePodcastMutationVariables>(
+      DELETE_PODCAST_MUTATION,
+      {
+        refetchQueries: [{ query: PODCAST_QUERY }],
+      }
+  );
+  const onDeleteSubmit = () => {
+    if (!loadingDelete) {
+      let { id } = getValues();
+      id = +id;
+      deletePodcastMutation({
+        variables: {
+          deletePodcastInput: { id },
+        },
+      });
+    }
+  };
   const { register, getValues, handleSubmit, formState } = useForm<
-    IUpdatePodcastForm
-  >({
+      IUpdatePodcastForm
+      >({
     mode: "onChange",
     defaultValues: {
       id: podcast?.id,
@@ -177,14 +222,16 @@ export const EditPodcast = (props: any) => {
               </div>
             </div>
             <div className="w-full h-1/5 px-5 flex justify-between">
-              <div className="w-1/2 text-white">
-                {updatePodcastMutationResult?.updatePodcast.error && (
-                  <FormError
-                    errorMessage={
-                      updatePodcastMutationResult.updatePodcast.error
-                    }
-                  />
-                )}
+              <div className="w-1/2 flex items-center justify-end">
+                <button
+                  onClick={onDeletePodcast}
+                  className={
+                    "w-full text-sm font-sm focus:outline-none text-white py-3 rounded-3xl transition-colors " +
+                    "bg-red-500 hover:bg-red-400 bg-red-600 bg-opacity-80 hover:bg-red-400"
+                  }
+                >
+                  {loading ? "Loading..." : "삭제하기"}
+                </button>
               </div>
               <div className="w-1/2 pl-5 flex items-center justify-end">
                 <Button

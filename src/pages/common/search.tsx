@@ -10,8 +10,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useHistory, useLocation } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { ME_QUERY } from "./my-profile";
 
 export const Search = (props: any) => {
+  const { data: me } = useQuery(ME_QUERY);
   const location = useLocation();
   const history = useHistory();
   const back = () => {
@@ -58,9 +61,7 @@ export const Search = (props: any) => {
           </div>
         )}
       </div>
-      <div
-        className="w-3/5 flex items-center justify-end"
-      >
+      <div className="w-3/5 flex items-center justify-end">
         <div
           className="h-10 bg-black rounded-3xl flex items-center hover:bg-gray-800 cursor-pointer"
           onClick={onMenuBox}
@@ -69,7 +70,7 @@ export const Search = (props: any) => {
             <FontAwesomeIcon icon={faUser} className="text-xs text-white" />
           </div>
           <div className="mr-2 hidden lg:block text-sm font-bold">
-            <span>여정식</span>
+            <span>{me?.me.email}</span>
           </div>
           <div className="mr-5 hidden lg:block">
             {!menuBox ? (

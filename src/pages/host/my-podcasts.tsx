@@ -1,7 +1,7 @@
 import React from "react";
 import { Podcast } from "./podcast";
 
-interface IPodcast {
+export interface IPodcast {
   id: string;
   title: string;
   category: string;

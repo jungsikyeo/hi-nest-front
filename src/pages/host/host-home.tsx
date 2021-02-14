@@ -13,7 +13,7 @@ import {
   createPodcastMutation,
   createPodcastMutationVariables,
 } from "../../__generated__/createPodcastMutation";
-import { MyProfile } from "../common/my-profile";
+import {ME_QUERY, MyProfile} from "../common/my-profile";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -166,7 +166,7 @@ export const HostHome = () => {
               <Search handleOnchange={setSearchText} />
             </div>
             <div
-              className="w-full overflow-y-auto bg-gray-900 bg-opacity-90"
+              className="w-full overflow-y-scroll bg-gray-900 bg-opacity-90"
               style={{ height: "200px", minHeight: "calc(100vh - 140px)" }}
             >
               {path === "my-profile" && <MyProfile />}

@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
     alert("힝 속았지~? ^.~");
   };
   return (
-    <footer className="bg-black xl:w-full xl:bottom-0 xl:fixed">
+    <footer className="bg-black xl:w-full">
       <div className="w-full px-3 py-16 xl:px-0 flex flex-col items-start sm:flex-col sm:items-start lg:flex-row lg:justify-around">
         <Link to="/" className="mb-12 md:px-20">
           <div className="text-sm flex items-center">

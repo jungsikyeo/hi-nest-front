@@ -13,7 +13,7 @@ export const Home = () => {
         <title>Home | Podcast</title>
       </Helmet>
       <Header />
-      <main className="w-full flex flex-col items-center">
+      <main className="w-full flex flex-col items-center min-h-full max-h-full" style={{height: "450px"}}>
         <div
           className="w-full px-5 pt-14 text-4xl font-bold text-white"
           style={{
@@ -42,7 +42,7 @@ export const Home = () => {
             <img src={apple} className="h-10" alt="Apple" />
           </span>
         </div>
-        <div className="w-full px-5 pb-10 flex text-xs text-white tracking-tighter">
+        <div className="w-full px-5 mb-10 flex text-xs text-white tracking-tighter">
           <span>
             약관이 적용됩니다. Premium을 이미 이용해 보셨거나 다른 기기로
             이용하시려는 경우 이 혜택이 제공되지 않습니다. 7일 이후에도 계속

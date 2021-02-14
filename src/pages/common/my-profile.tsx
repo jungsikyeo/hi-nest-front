@@ -1,25 +1,34 @@
 import React from "react";
-import podcastDefault from "../../images/podcast_default.svg";
-import { useState } from "react";
-import { Episodes } from "../../components/episodes";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { gql, useQuery } from "@apollo/client";
+import { PODCAST_QUERY } from "../host/host-home";
+import { SUBSCRIPTION_QUERY } from "../listener/listener-home";
 
-interface IPodcast {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  episodes: any;
-}
+export const ME_QUERY = gql`
+  query me {
+    me {
+      id
+      email
+      role
+    }
+  }
+`;
 
-export const MyProfile = (props: any) => {
+export const MyProfile = () => {
+  const { data: me } = useQuery(ME_QUERY);
+  const callQuery = me?.me.role === "Host" ? PODCAST_QUERY : SUBSCRIPTION_QUERY;
+  const { data } = useQuery(callQuery);
+
+  const podcasts =
+    me?.me.role === "Host" ? data?.myPodcasts.podcasts : data.subscriptions;
+  console.log(podcasts);
   return (
     <div
       className="w-full py-5 px-10 text-gray-500"
       style={{ minWidth: "500px" }}
     >
-      <div className="w-full h-52 flex items-end">
+      <div className="w-full h-52 flex items-center">
         <div
           className="mb-5 mr-5 flex items-center justify-center bg-black bg-opacity-40 rounded-full items-end shadow-2xl"
           style={{ width: "200px", height: "200px" }}
@@ -30,14 +39,14 @@ export const MyProfile = (props: any) => {
           />
         </div>
         <div className="w-auto mb-5 flex flex-col items-start">
-          <span className="text-sm text-white text-opacity-50">
-            프로
-          </span>
-          <span className="text-5xl text-white font-bold pt-1 pb-2">
-            여정식
+          <span className="text-xs text-white text-opacity-50">프로필</span>
+          <span className="text-5xl text-white font-bold py-5">
+            {me?.me.email}
           </span>
           <span className="text-sm text-white text-opacity-70">
-            구독 수
+            {
+              `${me?.me.role === "Host" ? `내 플레이리스트 수 :` : `내 구독 수`} ${podcasts.length}`
+            }
           </span>
         </div>
       </div>

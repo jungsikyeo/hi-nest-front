@@ -11,7 +11,7 @@ import { MySubscriptions } from "./my-subscriptions";
 import { DetailSubscription } from "./detail-subscription";
 import { MyProfile } from "../common/my-profile";
 
-export const PODCAST_QUERY = gql`
+export const SUBSCRIPTION_QUERY = gql`
   query SubscriptionsQuery {
     subscriptions {
       ...PodcastParts
@@ -21,7 +21,7 @@ export const PODCAST_QUERY = gql`
 `;
 
 export const ListenerHome = () => {
-  let { data: podcasts } = useQuery(PODCAST_QUERY);
+  let { data: podcasts } = useQuery(SUBSCRIPTION_QUERY);
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
   const [searchText, setSearchText] = useState("");
@@ -103,7 +103,7 @@ export const ListenerHome = () => {
               className="w-full overflow-y-auto bg-gray-900 bg-opacity-90"
               style={{ height: "200px", minHeight: "calc(100vh - 140px)" }}
             >
-              {path === "my-profile" && <MyProfile data={podcasts} text={searchText}/>}
+              {path === "my-profile" && <MyProfile />}
               {path === "podcasts" && (
                 <DetailSubscription data={{ podcasts, paramId }} />
               )}

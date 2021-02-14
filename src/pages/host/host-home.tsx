@@ -13,7 +13,7 @@ import {
   createPodcastMutation,
   createPodcastMutationVariables,
 } from "../../__generated__/createPodcastMutation";
-import { MySubscriptions } from "../listener/my-subscriptions";
+import { MyProfile } from "../common/my-profile";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -169,9 +169,11 @@ export const HostHome = () => {
               className="w-full overflow-y-auto bg-gray-900 bg-opacity-90"
               style={{ height: "200px", minHeight: "calc(100vh - 140px)" }}
             >
-              {path === "podcasts" ? (
+              {path === "my-profile" && <MyProfile />}
+              {path === "podcasts" && (
                 <DetailPodcast data={{ podcasts, paramId }} />
-              ) : (
+              )}
+              {path !== "my-profile" && path !== "podcasts" && (
                 <MyPodcasts data={podcasts} text={searchText} />
               )}
             </div>

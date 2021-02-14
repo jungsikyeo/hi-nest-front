@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import spotifyLogoWhite from "../../images/spotify_logo_white.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { gql, useQuery } from "@apollo/client";
 import { PODCAST_FRAGMENT } from "../../fragments";
 import { Search } from "../common/search";
-import { DetailPodcast } from "../host/detail-podcast";
 import { MySubscriptions } from "./my-subscriptions";
-import {DetailSubscription} from "./detail-subscription";
+import { DetailSubscription } from "./detail-subscription";
+import { MyProfile } from "../common/my-profile";
 
 export const PODCAST_QUERY = gql`
   query SubscriptionsQuery {
@@ -92,20 +92,22 @@ export const ListenerHome = () => {
               </ul>
             </div>
           </div>
-          <div style={{width: "calc(100vw - 230px)"}}>
+          <div style={{ width: "calc(100vw - 230px)" }}>
             <div
               className="w-full flex text-white px-10 bg-gray-900 bg-opacity-95"
-              style={{height: "60px" }}
+              style={{ height: "60px" }}
             >
               <Search handleOnchange={setSearchText} />
             </div>
             <div
               className="w-full overflow-y-auto bg-gray-900 bg-opacity-90"
-              style={{ height:"200px", minHeight: "calc(100vh - 140px)" }}
+              style={{ height: "200px", minHeight: "calc(100vh - 140px)" }}
             >
-              {path === "podcasts" ? (
+              {path === "my-profile" && <MyProfile data={podcasts} text={searchText}/>}
+              {path === "podcasts" && (
                 <DetailSubscription data={{ podcasts, paramId }} />
-              ) : (
+              )}
+              {path !== "my-profile" && path !== "podcasts" && (
                 <MySubscriptions data={podcasts} text={searchText} />
               )}
             </div>

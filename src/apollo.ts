@@ -3,35 +3,35 @@ import {
   InMemoryCache,
   makeVar,
   createHttpLink,
+  split,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { LS_TOKEN } from "./constants";
 import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from "@apollo/client/utilities";
 
 const token = localStorage.getItem(LS_TOKEN);
 export const isLoggedInVar = makeVar(Boolean(token));
 export const authTokenVar = makeVar(token);
 
-/*
 const wsLink = new WebSocketLink({
   uri:
-    process.env.NODE_ENV === "production"
-      ? "wss://nuber-eats-yjs-backend.herokuapp.com/graphql"
-      : "ws://localhost:4000/graphql",
+      process.env.NODE_ENV === "production"
+          ? "wss://nuber-eats-yjs-backend.herokuapp.com/graphql"
+          : `ws://localhost:4000/graphql`,
   options: {
-    reconnection: true,
+    reconnect: true,
     connectionParams: {
       "x-jwt": authTokenVar() || "",
     },
   },
 });
- */
 
 const httpLink = createHttpLink({
   uri:
-    process.env.NODE_ENV === "production"
-      ? "https://nuber-eats-yjs-backend.herokuapp.com/graphql"
-      : "http://localhost:4000/graphql",
+      process.env.NODE_ENV === "production"
+          ? "https://nuber-eats-yjs-backend.herokuapp.com/graphql"
+          : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -43,6 +43,18 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const splitLink = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+          definition.kind === "OperationDefinition" &&
+          definition.operation === "subscription"
+      );
+    },
+    wsLink,
+    authLink.concat(httpLink)
+);
+
 export const makeLogout = () => {
   localStorage.removeItem(LS_TOKEN);
   isLoggedInVar(false);
@@ -50,7 +62,7 @@ export const makeLogout = () => {
 };
 
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache({
     typePolicies: {
       Query: {

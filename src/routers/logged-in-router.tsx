@@ -47,6 +47,18 @@ const listenerRoutes = [
     path: "/listeners",
     component: <ListenerHome />,
   },
+  {
+    path: "/search",
+    component: <ListenerHome />,
+  },
+  {
+    path: "/podcasts/:id",
+    component: <ListenerHome />,
+  },
+  {
+    path: "/my-profile",
+    component: <ListenerHome />,
+  },
 ];
 
 export const LoggedInRouter = () => {

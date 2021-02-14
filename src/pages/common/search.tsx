@@ -9,9 +9,10 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 export const Search = (props: any) => {
+  const location = useLocation();
   const history = useHistory();
   const back = () => {
     history.goBack();
@@ -24,8 +25,8 @@ export const Search = (props: any) => {
   const onMenuBox = () => setMenuBox((menuBox) => (menuBox = !menuBox));
 
   return (
-    <section className="flex justify-between py-2">
-      <div className="w-1/3 flex flex-row items-center justify-start">
+    <section className="w-full flex justify-between py-2">
+      <div className="w-2/5 flex flex-row items-center justify-start">
         <div className="mr-3 ">
           <a
             onClick={back}
@@ -42,19 +43,23 @@ export const Search = (props: any) => {
             <FontAwesomeIcon icon={faChevronRight} className="text-white" />
           </a>
         </div>
-        <div className="w-full flex items-center">
-          <FontAwesomeIcon icon={faSearch} className="text-black fixed ml-3" />
-          <input
-            type="text"
-            placeholder="카테고리명 또는 팟캐스트를 검색하세요"
-            onChange={props.handleOnchange}
-            className="w-full w-auto h-10 rounded-3xl text-sm outline-none text-left text-black overflow-ellipsis pl-10"
-          />
-        </div>
+        {location.pathname === "/search" && (
+          <div className="w-full flex items-center">
+            <FontAwesomeIcon
+              icon={faSearch}
+              className="text-black fixed ml-3"
+            />
+            <input
+              type="text"
+              placeholder="카테고리명 또는 플레이리스트를 검색하세요"
+              onChange={props.handleOnchange}
+              className="w-full w-auto h-10 rounded-3xl text-sm outline-none text-left text-black overflow-ellipsis pl-10"
+            />
+          </div>
+        )}
       </div>
       <div
-        className="flex items-center justify-end"
-        style={{ paddingRight: "220px" }}
+        className="w-3/5 flex items-center justify-end"
       >
         <div
           className="h-10 bg-black rounded-3xl flex items-center hover:bg-gray-800 cursor-pointer"

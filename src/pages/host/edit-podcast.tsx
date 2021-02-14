@@ -5,7 +5,7 @@ import podcastDefault from "../../images/podcast_default.svg";
 import { Button } from "../../components/button";
 import { useForm } from "react-hook-form";
 import { IUpdatePodcastForm, PODCAST_QUERY } from "./host-home";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 import {
   updatePodcastMutation,
@@ -15,6 +15,7 @@ import {
   deletePodcastMutation,
   deletePodcastMutationVariables,
 } from "../../__generated__/deletePodcastMutation";
+import { DocumentNode } from "graphql";
 
 const UPDATE_PODCAST_MUTATION = gql`
   mutation updatePodcastMutation($updatePodcastInput: UpdatePodcastInput!) {
@@ -36,24 +37,24 @@ const DELETE_PODCAST_MUTATION = gql`
 export const EditPodcast = (props: any) => {
   const podcast = props.podcast;
   const history = useHistory();
+  const location = useLocation();
+  const setEditDetail = () => props.onEditBoxClick(props.editBoxState);
   const onCompleted = (data: updatePodcastMutation) => {
     const {
       updatePodcast: { ok },
     } = data;
     if (ok) {
-      history.push("/");
+      history.push(location.pathname);
+      setEditDetail();
     }
   };
-  const [
+  const [updatePodcastMutation, { loading }] = useMutation<
     updatePodcastMutation,
-    { loading },
-  ] = useMutation<updatePodcastMutation, updatePodcastMutationVariables>(
-    UPDATE_PODCAST_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [{ query: PODCAST_QUERY }],
-    }
-  );
+    updatePodcastMutationVariables
+  >(UPDATE_PODCAST_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: PODCAST_QUERY }],
+  });
   const onSubmit = () => {
     if (!loading) {
       let { id, title, category, description } = getValues();
@@ -67,28 +68,19 @@ export const EditPodcast = (props: any) => {
   };
   const onDeletePodcast = () => {
     if (
-      window.confirm("플레이리스트 및 노래가 모두 삭제됩니다.\n삭제하시겠습니까? ")
+      window.confirm(
+        "플레이리스트 및 노래가 모두 삭제됩니다.\n삭제하시겠습니까? "
+      )
     ) {
       onDeleteSubmit();
     }
   };
-  const onDeleteCompleted = (data: deletePodcastMutation) => {
-    const {
-      deletePodcast: { ok },
-    } = data;
-    if (ok) {
-      history.push("/");
-    }
-  };
-  const [
+  const [deletePodcastMutation, { loading: loadingDelete }] = useMutation<
     deletePodcastMutation,
-    { loading: loadingDelete },
-  ] = useMutation<deletePodcastMutation, deletePodcastMutationVariables>(
-      DELETE_PODCAST_MUTATION,
-      {
-        refetchQueries: [{ query: PODCAST_QUERY }],
-      }
-  );
+    deletePodcastMutationVariables
+  >(DELETE_PODCAST_MUTATION, {
+    refetchQueries: [{ query: PODCAST_QUERY }],
+  });
   const onDeleteSubmit = () => {
     if (!loadingDelete) {
       let { id } = getValues();
@@ -98,11 +90,15 @@ export const EditPodcast = (props: any) => {
           deletePodcastInput: { id },
         },
       });
+
+      setTimeout(() => {
+        history.push("/");
+      }, 1500);
     }
   };
   const { register, getValues, handleSubmit, formState } = useForm<
-      IUpdatePodcastForm
-      >({
+    IUpdatePodcastForm
+  >({
     mode: "onChange",
     defaultValues: {
       id: podcast?.id,
@@ -129,7 +125,7 @@ export const EditPodcast = (props: any) => {
             <div className="w-full h-1/5 flex justify-between p-5">
               <h1 className="font-bold text-xl">Edit details</h1>
               <a
-                onClick={() => props.onEditBoxClick(props.editBoxState)}
+                onClick={setEditDetail}
                 className="flex items-center justify-center cursor-pointer"
               >
                 <FontAwesomeIcon icon={faTimes} />

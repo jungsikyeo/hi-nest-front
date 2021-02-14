@@ -2,7 +2,6 @@ import React from "react";
 import podcastDefault from "../../images/podcast_default.svg";
 import { useState } from "react";
 import { Episodes } from "../../components/episodes";
-import { EditPodcast } from "./edit-podcast";
 
 interface IPodcast {
   id: number;
@@ -12,17 +11,13 @@ interface IPodcast {
   episodes: any;
 }
 
-export const DetailPodcast = (props: any) => {
-  const podcast: IPodcast = props.data.podcasts?.myPodcasts.podcasts.find(
+export const DetailSubscription = (props: any) => {
+  const podcast: IPodcast = props.data.podcasts?.subscriptions.find(
     (podcast: IPodcast) => podcast.id === +props.data.paramId
   );
 
-  const [editBoxState, setEditBoxState] = useState(false);
-  const onEditBoxClick = () =>
-    setEditBoxState((editBoxState) => (editBoxState = !editBoxState));
-
   return (
-    <div className="w-full py-5 px-10" style={{minWidth: "500px"}}>
+    <div className="w-full py-5 px-10 text-gray-500" style={{minWidth: "500px"}}>
       <div className="w-full h-52 flex items-end">
         <div className="mb-5 mr-5 flex items-end shadow-2xl">
           <img
@@ -37,9 +32,7 @@ export const DetailPodcast = (props: any) => {
             {podcast?.category}
           </span>
           <span className="text-5xl text-white font-bold pt-1 pb-2">
-            <a onClick={onEditBoxClick} className="cursor-pointer">
-              {podcast?.title}
-            </a>
+            {podcast?.title}
           </span>
           <span className="text-sm text-white text-opacity-70">
             {podcast?.description}
@@ -73,9 +66,6 @@ export const DetailPodcast = (props: any) => {
           </div>
         </div>
       </div>
-      {editBoxState && (
-        <EditPodcast podcast={podcast} editBoxState={editBoxState} onEditBoxClick={onEditBoxClick} />
-      )}
     </div>
   );
 };

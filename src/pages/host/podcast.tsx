@@ -15,7 +15,7 @@ export const Podcast: React.FC<IPodcastProps> = ({
   category,
 }) => (
   <Link to={`/podcasts/${id}`}>
-    <div className="flex flex-col bg-gray-900 w-full h-auto">
+    <div className="flex flex-col bg-gray-900 w-full">
       <div className="pt-5 flex items-center justify-center">
         <img
           src={podcastDefault}

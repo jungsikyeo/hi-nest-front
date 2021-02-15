@@ -3,7 +3,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { gql, useQuery } from "@apollo/client";
 import { PODCAST_QUERY } from "../host/host-home";
-import { SUBSCRIPTION_QUERY } from "../listener/listener-home";
+import {PODCAST_FRAGMENT} from "../../fragments";
 
 export const ME_QUERY = gql`
   query me {
@@ -13,6 +13,14 @@ export const ME_QUERY = gql`
       role
     }
   }
+`;
+export const SUBSCRIPTION_QUERY = gql`
+  query SubscriptionsQuery {
+    subscriptions {
+      ...PodcastParts
+    }
+  }
+  ${PODCAST_FRAGMENT}
 `;
 
 export const MyProfile = () => {

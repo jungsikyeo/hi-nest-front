@@ -12,6 +12,10 @@ export enum UserRole {
   Listener = "Listener",
 }
 
+export interface ChangeSubscribeInput {
+  podcastId: number;
+}
+
 export interface CreateAccountInput {
   email?: string | null;
   password?: string | null;

@@ -26,8 +26,9 @@ export const Podcast: React.FC<IPodcastProps> = ({
       <span className="p-3 h-10 text-sm opacity-70 border-gray-800 overflow-hidden overflow-ellipsis">
         {category}
       </span>
-      <div className="text-lg font-bold text-white px-3 pt-1 overflow-hidden overflow-ellipsis whitespace-nowrap w-auto h-14">{title}</div>
-
+      <div className="text-lg font-bold text-white px-3 pt-1 overflow-hidden overflow-ellipsis whitespace-nowrap w-auto h-14">
+        {title}
+      </div>
     </div>
   </Link>
 );

@@ -10,9 +10,17 @@ import { Search } from "../common/search";
 import { MySubscriptions } from "./my-subscriptions";
 import { DetailSubscription } from "./detail-subscription";
 import { MyProfile } from "../common/my-profile";
+import { SearchPodcasts } from "./search-podcasts";
 
-export const SUBSCRIPTION_QUERY = gql`
-  query SubscriptionsQuery {
+export const GET_ALL_PODCASTS_QUERY = gql`
+  query GetAllPodcasts {
+    getAllPodcasts {
+      ok
+      error
+      podcasts {
+        ...PodcastParts
+      }
+    }
     subscriptions {
       ...PodcastParts
     }
@@ -21,13 +29,13 @@ export const SUBSCRIPTION_QUERY = gql`
 `;
 
 export const ListenerHome = () => {
-  let { data: podcasts } = useQuery(SUBSCRIPTION_QUERY);
+  let { data: podcasts } = useQuery(GET_ALL_PODCASTS_QUERY);
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
   const [searchText, setSearchText] = useState("");
 
   return (
-    <div>
+    <div className="bg-gradient-to-br from-gray-900 to-black text-gray-500">
       <Helmet>
         <title>Listener | Podcast</title>
       </Helmet>
@@ -77,10 +85,7 @@ export const ListenerHome = () => {
               </div>
             </div>
 
-            <div
-              className="overflow-y-scroll"
-              style={{ maxHeight: "calc(100vh - 290px)" }}
-            >
+            <div className="" style={{ maxHeight: "calc(100vh - 290px)" }}>
               <ul className="text-sm px-5">
                 {podcasts?.subscriptions?.map((podcast: any) => (
                   <li className="hover:text-white tracking-wider pb-3 overflow-x-hidden overflow-ellipsis whitespace-nowrap">
@@ -107,13 +112,21 @@ export const ListenerHome = () => {
               {path === "podcasts" && (
                 <DetailSubscription data={{ podcasts, paramId }} />
               )}
-              {path !== "my-profile" && path !== "podcasts" && (
-                <MySubscriptions data={podcasts} text={searchText} />
+              {path === "search" && (
+                <SearchPodcasts data={podcasts} text={searchText} />
               )}
+              {path !== "my-profile" &&
+                path !== "podcasts" &&
+                path !== "search" && (
+                  <MySubscriptions data={podcasts} text={searchText} />
+                )}
             </div>
           </div>
         </div>
-        <footer className="bg-black text-white flex items-center justify-center" style={{ height: "80px" }}>
+        <footer
+          className="bg-black text-white flex items-center justify-center"
+          style={{ height: "80px" }}
+        >
           <span>player comming soon....</span>
         </footer>
       </div>

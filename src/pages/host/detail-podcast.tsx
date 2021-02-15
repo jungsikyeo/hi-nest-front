@@ -1,8 +1,11 @@
 import React from "react";
 import podcastDefault from "../../images/podcast_default.svg";
 import { useState } from "react";
-import { Episodes } from "../../components/episodes";
-import { EditPodcast } from "./edit-podcast";
+import playIcon from "../../images/play.svg";
+import heartFill from "../../images/heart_fill.svg";
+import heartFull from "../../images/heart_full.svg";
+import {Episodes} from "../../components/episodes";
+import {EditPodcast} from "./edit-podcast";
 
 interface IPodcast {
   id: number;
@@ -64,7 +67,9 @@ export const DetailPodcast = (props: any) => {
               </section>
             ) : (
               <section className="h-15 text-2xl text-white font-medium pl-5 py-2 mt-5">
-                <span>플레이리스트에 추가할 곡을 찾아보세요</span>
+                <div>
+                  <span>플레이리스트에 추가할 곡을 찾아보세요</span>
+                </div>
               </section>
             )}
             {podcast?.episodes.map((episode: any, index: number) => (

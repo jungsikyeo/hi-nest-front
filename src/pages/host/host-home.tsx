@@ -85,7 +85,7 @@ export const HostHome = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-gray-500">
+    <div className="bg-gradient-to-b from-gray-800 to-black text-gray-500">
       <Helmet>
         <title>Host | Podcast</title>
       </Helmet>
@@ -143,15 +143,23 @@ export const HostHome = () => {
                 <span className="text-sm">플레이리스트 만들기</span>
               </a>
             </div>
-            <div className="" style={{ maxHeight: "calc(100vh - 340px)" }}>
+            <div
+              className="overflow-y-auto"
+              style={{ maxHeight: "calc(100vh - 340px)" }}
+            >
               <ul className="text-sm px-5">
-                {podcasts?.myPodcasts.podcasts?.map((podcast: any) => (
-                  <li className="hover:text-white tracking-wider pb-3 overflow-x-hidden overflow-ellipsis whitespace-nowrap">
-                    <Link to={`/podcasts/${podcast.id}`} key={podcast.id}>
-                      {podcast.title}
-                    </Link>
-                  </li>
-                ))}
+                {podcasts?.myPodcasts.podcasts?.map(
+                  (podcast: any, index: number) => (
+                    <li
+                      key={index}
+                      className="hover:text-white tracking-wider pb-3 overflow-x-hidden overflow-ellipsis whitespace-nowrap"
+                    >
+                      <Link to={`/podcasts/${podcast.id}`} key={podcast.id}>
+                        {podcast.title}
+                      </Link>
+                    </li>
+                  )
+                )}
               </ul>
             </div>
           </div>
@@ -163,7 +171,7 @@ export const HostHome = () => {
               <Search handleOnchange={setSearchText} />
             </div>
             <div
-              className="w-full overflow-y-scroll bg-gray-900 bg-opacity-90"
+              className="w-full overflow-y-scroll bg-black bg-opacity-10"
               style={{ height: "200px", minHeight: "calc(100vh - 140px)" }}
             >
               {path === "my-profile" && <MyProfile />}

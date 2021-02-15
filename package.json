@@ -2,6 +2,7 @@
   "name": "hi-nest-front",
   "version": "0.1.0",
   "private": true,
+  "proxy" : "https://nuber-eats-yjs-backend.herokuapp.com",
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
@@ -18,7 +19,9 @@
     "@types/react-helmet": "^6.1.0",
     "apollo-link-ws": "^1.0.20",
     "autoprefixer": "^9.8.6",
+    "axios": "^0.21.1",
     "graphql": "^15.5.0",
+    "http-proxy-middleware": "^1.0.6",
     "postcss": "^7.0.35",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

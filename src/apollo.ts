@@ -62,7 +62,7 @@ export const makeLogout = () => {
 };
 
 export const client = new ApolloClient({
-  link: splitLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache({
     typePolicies: {
       Query: {

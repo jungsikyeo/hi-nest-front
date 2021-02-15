@@ -6,7 +6,7 @@ export const Episodes = (props: any) => {
   const index = props.data.index + 1;
   return (
     <section
-      key={episode.id}
+      key={episode?.id}
       className={`
                   grid gap-4 grid-cols-4 
                   h-15 
@@ -22,8 +22,8 @@ export const Episodes = (props: any) => {
     >
       <span className="flex items-center">{index}</span>
       <div className="flex items-center">
-        {episode.imageUrl ? (
-          <img src={episode.imageUrl} className="w-10 h-10" alt="thumnail" />
+        {episode?.imageUrl ? (
+          <img src={episode?.imageUrl} className="w-10 h-10" alt="thumnail" />
         ) : (
           <img
             src={podcastDefault}
@@ -31,10 +31,10 @@ export const Episodes = (props: any) => {
             alt="thumnail"
           />
         )}
-        <span className="text-white pl-3">{episode.title}</span>
+        <span className="text-white pl-3">{episode?.title}</span>
       </div>
-      <span className="flex items-center">{episode.category}</span>
-      <span className="flex items-center">{episode.playTime}</span>
+      <span className="flex items-center">{episode?.category}</span>
+      <span className="flex items-center">{`${episode?.playTime ? `${Math.floor(episode?.playTime / 60000)}:${(episode?.playTime % 60000).toString().substring(0,2)}`:``}`}</span>
     </section>
   );
 };

@@ -26,14 +26,8 @@ export const MySubscriptions = (props: any) => {
         <span>내 구독 플레이리스트</span>
       </div>
       <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-        {podcastFilter?.map((podcast: any) => (
-          <Podcast
-            key={podcast.id}
-            id={podcast.id + ""}
-            category={podcast.category}
-            title={podcast.title}
-            description={podcast.description}
-          />
+        {podcastFilter?.map((podcast: any, index:number) => (
+          <Podcast key={podcast.id} data={{podcast, index}} />
         ))}
       </div>
     </div>

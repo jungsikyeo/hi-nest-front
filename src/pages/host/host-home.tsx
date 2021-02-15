@@ -9,11 +9,14 @@ import { MyPodcasts } from "./my-podcasts";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { PODCAST_FRAGMENT } from "../../fragments";
 import { DetailPodcast } from "./detail-podcast";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   createPodcastMutation,
   createPodcastMutationVariables,
 } from "../../__generated__/createPodcastMutation";
-import { ME_QUERY, MyProfile } from "../common/my-profile";
+import { MyProfile } from "../common/my-profile";
+import {notifyInfo, notifySuccess} from "../listener/detail-subscription";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -56,6 +59,7 @@ export const HostHome = () => {
       createPodcast: { ok, id },
     } = data;
     if (ok) {
+      notifySuccess(<div className={`text-sm`}>플레이리스트가 생성되었습니다.</div>);
       setTimeout(() => {
         history.push(`/podcasts/${id}`);
       }, 1500);
@@ -75,6 +79,8 @@ export const HostHome = () => {
       const title = `내 플레이리스트 #${index}`;
       const category = `미분류`;
       const description = null;
+
+      notifyInfo(<div className={`text-sm`}>플레이리스트를 추가합니다.</div>);
 
       createPodcastMutation({
         variables: {
@@ -141,6 +147,17 @@ export const HostHome = () => {
                   <FontAwesomeIcon icon={faPlus} className="text-black" />
                 </span>
                 <span className="text-sm">플레이리스트 만들기</span>
+                <ToastContainer
+                    position="bottom-center"
+                    autoClose={3000}
+                    hideProgressBar
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
               </a>
             </div>
             <div

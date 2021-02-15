@@ -1,5 +1,4 @@
 import React from "react";
-import podcastDefault from "../../images/podcast_default.svg";
 import { useState } from "react";
 import { Episodes } from "../../components/episodes";
 import { EditPodcast } from "./edit-podcast";
@@ -7,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import {
-  IEpisode,
   SearchApiEpisodes,
 } from "../../components/search-api-episodes";
 import { Thumbnail } from "../../components/thumbnail";
@@ -63,7 +61,7 @@ export const DetailPodcast = (props: any) => {
         <div className="w-full">
           <div className="flex flex-col">
             <section
-              className="grid gap-4 grid-cols-4 text-xs h-15 border-b border-solid border-gray-700 border-opacity-50 pb-2"
+              className="grid gap-4 grid-cols-4 text-xs h-15 border-b border-solid border-gray-700 border-opacity-50 pt-5 pb-2"
               style={{
                 gridTemplateColumns:
                   "[index] 16px [first] 6fr [var1] 4fr [last] minmax(120px,1fr)",

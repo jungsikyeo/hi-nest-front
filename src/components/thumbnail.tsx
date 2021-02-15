@@ -51,7 +51,7 @@ export const Thumbnail = (props: any) => {
   });
 
   return (
-    <div className="mb-5 mr-5 flex items-end shadow-2xl">
+    <div className="mx-2 flex items-center justify-center shadow-2xl">
       {podcast?.episodes.length === 0 && (
         <div className="flex">
           <img

@@ -35,7 +35,7 @@ export const ListenerHome = () => {
   const [searchText, setSearchText] = useState("");
 
   return (
-    <div className="bg-gradient-to-br from-gray-900 to-black text-gray-500">
+    <div className="bg-gradient-to-b from-gray-800 to-black text-gray-500">
       <Helmet>
         <title>Listener | Podcast</title>
       </Helmet>
@@ -105,7 +105,7 @@ export const ListenerHome = () => {
               <Search handleOnchange={setSearchText} />
             </div>
             <div
-              className="w-full overflow-y-auto bg-gray-900 bg-opacity-90"
+              className="w-full overflow-y-scroll bg-black bg-opacity-10"
               style={{ height: "200px", minHeight: "calc(100vh - 140px)" }}
             >
               {path === "my-profile" && <MyProfile />}

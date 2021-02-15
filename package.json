@@ -2,7 +2,6 @@
   "name": "hi-nest-front",
   "version": "0.1.0",
   "private": true,
-  "proxy" : "https://nuber-eats-yjs-backend.herokuapp.com",
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",

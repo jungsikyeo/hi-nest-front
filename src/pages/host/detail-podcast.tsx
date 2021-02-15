@@ -29,7 +29,7 @@ export const DetailPodcast = (props: any) => {
   const onChangeSearchApiText = (e: any) => {
     axios
       .get(
-        `/spotify/api/auth?searchText=${e.target.value}`
+        `https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/auth?searchText=${e.target.value}`
         //"http://localhost:4000/spotify/api/auth?searchText=%EC%86%8C%EB%85%80%EC%8B%9C%EB%8C%80"
       )
       .then(({ data }) => {

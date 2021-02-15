@@ -34,7 +34,15 @@ export const Episodes = (props: any) => {
         <span className="text-white pl-3">{episode?.title}</span>
       </div>
       <span className="flex items-center">{episode?.category}</span>
-      <span className="flex items-center">{`${episode?.playTime ? `${Math.floor(episode?.playTime / 60000)}:${(episode?.playTime % 60000).toString().substring(0,2)}`:``}`}</span>
+      <span className="flex items-center">{`${
+        episode?.playTime
+          ? `${Math.floor(episode?.playTime / 60000)}:${(
+              episode?.playTime % 60000
+            )
+              .toString()
+              .substring(0, 2)}`
+          : ``
+      }`}</span>
     </section>
   );
 };

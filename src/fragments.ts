@@ -11,6 +11,7 @@ export const PODCAST_FRAGMENT = gql`
       title
       category
       imageUrl
+      playTime
     }
   }
 `;

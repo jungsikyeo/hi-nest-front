@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React  from "react";
 import podcastDefault from "../../images/podcast_default.svg";
 import { useState } from "react";
 import { Episodes } from "../../components/episodes";
@@ -6,7 +6,7 @@ import { EditPodcast } from "./edit-podcast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { Podcast } from "./podcast";
+import {SearchApiEpisodes} from "../../components/search-api-episodes";
 
 interface IPodcast {
   id: number;
@@ -80,7 +80,7 @@ export const DetailPodcast = (props: any) => {
             {podcast?.episodes.map((episode: any, index: number) => (
               <Episodes data={{ episode, index }} />
             ))}
-            <div className="pb-5 border-t border-solid border-gray-700 border-opacity-50"></div>
+            <div className="pb-5 border-t border-solid border-gray-700 border-opacity-50"> </div>
             <section className="w-full h-15 text-2xl text-white font-medium pl-5 py-2 mt-5">
               <div>
                 <span>플레이리스트에 추가할 곡을 찾아보세요</span>
@@ -100,7 +100,7 @@ export const DetailPodcast = (props: any) => {
               </div>
             </section>
             {searchItems?.map((episode, index) => (
-              <Episodes data={{ episode, index }} />
+              <SearchApiEpisodes data={{ episode, index }} />
             ))}
           </div>
         </div>

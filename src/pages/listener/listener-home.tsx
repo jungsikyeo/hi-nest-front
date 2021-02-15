@@ -113,8 +113,8 @@ export const ListenerHome = () => {
             </div>
           </div>
         </div>
-        <footer className="bg-blue-500 text-white" style={{ height: "80px" }}>
-          player
+        <footer className="bg-black text-white flex items-center justify-center" style={{ height: "80px" }}>
+          <span>player comming soon....</span>
         </footer>
       </div>
     </div>

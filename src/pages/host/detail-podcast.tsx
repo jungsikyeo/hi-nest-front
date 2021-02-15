@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import podcastDefault from "../../images/podcast_default.svg";
 import { useState } from "react";
 import { Episodes } from "../../components/episodes";
@@ -6,7 +6,11 @@ import { EditPodcast } from "./edit-podcast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import {SearchApiEpisodes} from "../../components/search-api-episodes";
+import {
+  IEpisode,
+  SearchApiEpisodes,
+} from "../../components/search-api-episodes";
+import { Thumbnail } from "../../components/thumbnail";
 
 interface IPodcast {
   id: number;
@@ -40,14 +44,7 @@ export const DetailPodcast = (props: any) => {
   return (
     <div className="w-full py-5 px-10" style={{ minWidth: "500px" }}>
       <div className="w-full h-52 flex items-end">
-        <div className="mb-5 mr-5 flex items-end shadow-2xl">
-          <img
-            src={podcastDefault}
-            className="bg-gray-700"
-            style={{ width: "200px", height: "200px" }}
-            alt="podcast default"
-          />
-        </div>
+        <Thumbnail data={podcast} />
         <div className="w-auto mb-5 flex flex-col items-start">
           <span className="text-sm text-white text-opacity-50">
             {podcast?.category}
@@ -80,22 +77,24 @@ export const DetailPodcast = (props: any) => {
             {podcast?.episodes.map((episode: any, index: number) => (
               <Episodes data={{ episode, index }} />
             ))}
-            <div className="pb-5 border-t border-solid border-gray-700 border-opacity-50"> </div>
+            <div className="pb-5 border-t border-solid border-gray-700 border-opacity-50">
+              {" "}
+            </div>
             <section className="w-full h-15 text-2xl text-white font-medium pl-5 py-2 mt-5">
               <div>
                 <span>플레이리스트에 추가할 곡을 찾아보세요</span>
               </div>
               <div className="w-full pt-5 flex items-center relative">
                 <FontAwesomeIcon
-                    icon={faSearch}
-                    className="text-black absolute ml-3"
+                  icon={faSearch}
+                  className="text-black absolute ml-3"
                 />
                 <input
-                    type="text"
-                    placeholder="곡 또는 아티스트를 입력해주세요."
-                    onChange={onChangeSearchApiText}
-                    className="w-auto h-10  rounded-md text-sm outline-none text-left text-black overflow-ellipsis pl-10"
-                    style={{ width: "300px" }}
+                  type="text"
+                  placeholder="곡 또는 아티스트를 입력해주세요."
+                  onChange={onChangeSearchApiText}
+                  className="w-auto h-10  rounded-md text-sm outline-none text-left text-black overflow-ellipsis pl-10"
+                  style={{ width: "300px" }}
                 />
               </div>
             </section>

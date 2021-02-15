@@ -10,8 +10,10 @@ import {
   ChangeSubscribeMutation,
   ChangeSubscribeMutationVariables,
 } from "../../__generated__/ChangeSubscribeMutation";
+import { IEpisode } from "../../components/search-api-episodes";
+import { Thumbnail } from "../../components/thumbnail";
 
-interface IPodcast {
+export interface IPodcast {
   id: number;
   title: string;
   category: string;
@@ -113,14 +115,7 @@ export const DetailSubscription = (props: any) => {
       style={{ minWidth: "500px" }}
     >
       <div className="w-full h-52 flex items-end">
-        <div className="mb-5 mr-5 flex items-end shadow-2xl">
-          <img
-            src={podcastDefault}
-            className="bg-gray-700"
-            style={{ width: "200px", height: "200px" }}
-            alt="podcast default"
-          />
-        </div>
+        <Thumbnail data={podcast} />
         <div className="w-auto mb-5 flex flex-col items-start">
           <span className="text-sm text-white text-opacity-50">
             {podcast?.category}

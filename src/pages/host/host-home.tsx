@@ -16,7 +16,7 @@ import {
   createPodcastMutationVariables,
 } from "../../__generated__/createPodcastMutation";
 import { MyProfile } from "../common/my-profile";
-import {notifyInfo, notifySuccess} from "../listener/detail-subscription";
+import { notifyInfo, notifySuccess } from "../listener/detail-subscription";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -59,7 +59,9 @@ export const HostHome = () => {
       createPodcast: { ok, id },
     } = data;
     if (ok) {
-      notifySuccess(<div className={`text-sm`}>플레이리스트가 생성되었습니다.</div>);
+      notifySuccess(
+        <div className={`text-sm`}>플레이리스트가 생성되었습니다.</div>
+      );
       setTimeout(() => {
         history.push(`/podcasts/${id}`);
       }, 1500);
@@ -148,15 +150,15 @@ export const HostHome = () => {
                 </span>
                 <span className="text-sm">플레이리스트 만들기</span>
                 <ToastContainer
-                    position="bottom-center"
-                    autoClose={3000}
-                    hideProgressBar
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
+                  position="bottom-center"
+                  autoClose={3000}
+                  hideProgressBar
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
                 />
               </a>
             </div>

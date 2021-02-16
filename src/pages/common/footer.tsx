@@ -13,8 +13,8 @@ export const Footer: React.FC = () => {
   };
   return (
     <footer className="bg-black xl:w-full">
-      <div className="w-full px-3 py-16 xl:px-0 flex flex-col items-start sm:flex-col sm:items-start lg:flex-row lg:justify-around">
-        <Link to="/" className="mb-12 md:px-20">
+      <div className="w-full px-3 py-10 xl:px-0 flex flex-col items-start sm:flex-col sm:items-start lg:flex-row lg:justify-around">
+        <Link to="/" className="pb-10 md:px-20">
           <div className="text-sm flex items-center">
             <img
               src={spotifyLogoWhite}
@@ -24,7 +24,7 @@ export const Footer: React.FC = () => {
           </div>
         </Link>
         <div className="flex flex-col md:px-20 md:w-full md:flex-row md:justify-between">
-          <div className="text-white flex flex-col items-start mb-12">
+          <div className="text-white flex flex-col items-start pb-10">
             <span className="text-gray-500 text-xs font-bold">회사</span>
             <span className="pt-3 text-sm font-bold">
               <a onClick={detailInfo} className="cursor-pointer">
@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
               </a>
             </span>
           </div>
-          <div className="text-white flex flex-col items-start mb-12">
+          <div className="text-white flex flex-col items-start pb-10">
             <span className="text-gray-500 text-xs font-bold">커뮤니티</span>
             <span className="pt-3 text-sm font-bold">
               <a href="https://nomadcoders.co/users/mdotcom12">개발자</a>
@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
               <a href="https://nomadcoders.co/users/serranoarevalo">공급업체</a>
             </span>
           </div>
-          <div className="text-white flex flex-col items-start mb-12">
+          <div className="text-white flex flex-col items-start pb-10">
             <span className="text-gray-500 text-xs font-bold">
               노마드코더 링크
             </span>

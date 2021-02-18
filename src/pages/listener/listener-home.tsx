@@ -16,7 +16,7 @@ import { MySubscriptions } from "./my-subscriptions";
 import { DetailSubscription } from "./detail-subscription";
 import { MyProfile } from "../common/my-profile";
 import { SearchPodcasts } from "./search-podcasts";
-import { isIE } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 export const GET_ALL_PODCASTS_QUERY = gql`
   query GetAllPodcasts {
@@ -41,7 +41,7 @@ export const ListenerHome = () => {
   const [searchText, setSearchText] = useState("");
   const [leftState, setLeftState] = useState(true);
   const toggleLeftState = () => setLeftState((leftState) => !leftState);
-  if (isIE) {
+  if (isMobile) {
     toggleLeftState();
   }
 

@@ -22,7 +22,7 @@ import {
 } from "../../__generated__/createPodcastMutation";
 import { MyProfile } from "../common/my-profile";
 import { notifyInfo, notifySuccess } from "../listener/detail-subscription";
-import {isIE} from "react-device-detect";
+import {isMobile} from "react-device-detect";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -60,7 +60,7 @@ export const HostHome = () => {
   const [searchText, setSearchText] = useState("");
   const [leftState, setLeftState] = useState(true);
   const toggleLeftState = () => setLeftState((leftState) => !leftState);
-  if (isIE) {
+  if (isMobile) {
     toggleLeftState();
   }
   const history = useHistory();

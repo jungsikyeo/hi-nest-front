@@ -28,7 +28,7 @@ export const Search = (props: any) => {
 
   return (
     <section className="w-full flex justify-between py-2">
-      <div className="w-2/5 flex flex-row items-center justify-start">
+      <div className="w-3/5 flex flex-row items-center justify-start">
         <div className="mr-3 ">
           <a
             onClick={back}
@@ -60,7 +60,7 @@ export const Search = (props: any) => {
           </div>
         )}
       </div>
-      <div className="w-3/5 flex items-center justify-end">
+      <div className="w-2/5 flex items-center justify-end">
         <div
           className="h-10 bg-black rounded-3xl flex items-center hover:bg-gray-800 cursor-pointer"
           onClick={onMenuBox}

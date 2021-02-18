@@ -6,7 +6,6 @@ import {
   faUser,
   faSearch,
   faCaretUp,
-  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useHistory, useLocation } from "react-router-dom";

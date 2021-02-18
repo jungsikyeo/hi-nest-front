@@ -15,7 +15,6 @@ import {
   deletePodcastMutation,
   deletePodcastMutationVariables,
 } from "../../__generated__/deletePodcastMutation";
-import { DocumentNode } from "graphql";
 
 const UPDATE_PODCAST_MUTATION = gql`
   mutation updatePodcastMutation($updatePodcastInput: UpdatePodcastInput!) {

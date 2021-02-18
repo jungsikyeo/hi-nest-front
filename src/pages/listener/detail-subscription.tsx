@@ -1,5 +1,4 @@
 import React from "react";
-import podcastDefault from "../../images/podcast_default.svg";
 import { Episodes } from "../../components/episodes";
 import playIcon from "../../images/play.svg";
 import { gql, useMutation } from "@apollo/client";
@@ -10,7 +9,6 @@ import {
   ChangeSubscribeMutation,
   ChangeSubscribeMutationVariables,
 } from "../../__generated__/ChangeSubscribeMutation";
-import { IEpisode } from "../../components/search-api-episodes";
 import { Thumbnail } from "../../components/thumbnail";
 
 export interface IPodcast {

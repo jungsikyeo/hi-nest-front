@@ -9,7 +9,7 @@ import { MyPodcasts } from "./my-podcasts";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { PODCAST_FRAGMENT } from "../../fragments";
 import { DetailPodcast } from "./detail-podcast";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   createPodcastMutation,

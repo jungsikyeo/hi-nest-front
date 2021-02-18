@@ -7,7 +7,7 @@ export const Thumbnail = (props: any) => {
   let img1, img2, img3, img4, defaultImg;
   podcast?.episodes.forEach((episode: IEpisode, index: number) => {
     if (podcast?.episodes.length >= 1) {
-      if (index == 0) {
+      if (index === 0) {
         img1 = (
           <img
             src={episode?.imageUrl}
@@ -23,7 +23,7 @@ export const Thumbnail = (props: any) => {
           />
         );
       }
-      if (index == 1)
+      if (index === 1)
         img2 = (
           <img
             src={episode?.imageUrl}
@@ -31,7 +31,7 @@ export const Thumbnail = (props: any) => {
             alt=""
           />
         );
-      if (index == 2)
+      if (index === 2)
         img3 = (
           <img
             src={episode?.imageUrl}
@@ -39,7 +39,7 @@ export const Thumbnail = (props: any) => {
             alt=""
           />
         );
-      if (index == 3)
+      if (index === 3)
         img4 = (
           <img
             src={episode?.imageUrl}

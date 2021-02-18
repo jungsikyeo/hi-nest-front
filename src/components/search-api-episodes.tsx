@@ -3,7 +3,7 @@ import podcastDefault from "../images/podcast_default.svg";
 import { useHistory, useLocation } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 import { PODCAST_QUERY } from "../pages/host/host-home";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   createEpisodeMutation,

@@ -1,11 +1,9 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Header } from "./header";
-import circles from "../../images/circles.svg";
 import apple from "../../images/apple.svg";
 import google from "../../images/google.svg";
 import { Footer } from "./footer";
-import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (

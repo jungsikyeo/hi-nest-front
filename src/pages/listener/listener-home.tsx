@@ -39,11 +39,8 @@ export const ListenerHome = () => {
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
   const [searchText, setSearchText] = useState("");
-  const [leftState, setLeftState] = useState(true);
+  const [leftState, setLeftState] = useState(() => !isMobile);
   const toggleLeftState = () => setLeftState((leftState) => !leftState);
-  if (isMobile) {
-    toggleLeftState();
-  }
 
   return (
     <div className="bg-gradient-to-b from-gray-800 to-black text-gray-500">
@@ -67,7 +64,10 @@ export const ListenerHome = () => {
                       alt="Spotify"
                     />
                   </Link>
-                  <a onClick={toggleLeftState} className="cursor-pointer pr-5">
+                  <a
+                    onClick={toggleLeftState}
+                    className="cursor-pointer pr-5 flex items-center justify-center"
+                  >
                     <FontAwesomeIcon
                       icon={faTimes}
                       className="text-2xl text-white hover:text-green-500"

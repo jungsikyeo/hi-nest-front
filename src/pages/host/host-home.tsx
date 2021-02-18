@@ -3,7 +3,8 @@ import {
   faHome,
   faSearch,
   faPlus,
-  faBars, faTimes,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet-async";
@@ -22,7 +23,7 @@ import {
 } from "../../__generated__/createPodcastMutation";
 import { MyProfile } from "../common/my-profile";
 import { notifyInfo, notifySuccess } from "../listener/detail-subscription";
-import {isMobile} from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -58,11 +59,8 @@ export const HostHome = () => {
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
   const [searchText, setSearchText] = useState("");
-  const [leftState, setLeftState] = useState(true);
+  const [leftState, setLeftState] = useState(() =>  !isMobile);
   const toggleLeftState = () => setLeftState((leftState) => !leftState);
-  if (isMobile) {
-    toggleLeftState();
-  }
   const history = useHistory();
   const onCompleted = (data: createPodcastMutation) => {
     const {
@@ -124,10 +122,13 @@ export const HostHome = () => {
                       alt="Spotify"
                     />
                   </Link>
-                  <a onClick={toggleLeftState} className="cursor-pointer pr-5">
+                  <a
+                    onClick={toggleLeftState}
+                    className="cursor-pointer pr-5 flex items-center justify-center"
+                  >
                     <FontAwesomeIcon
-                        icon={faTimes}
-                        className="text-2xl text-white hover:text-green-500"
+                      icon={faTimes}
+                      className="text-2xl text-white hover:text-green-500"
                     />
                   </a>
                 </div>
@@ -221,9 +222,9 @@ export const HostHome = () => {
             </div>
           )}
           <div
-              style={{
-                width: leftState ? "calc(100vw - 230px)" : "calc(100vw - 50px)",
-              }}
+            style={{
+              width: leftState ? "calc(100vw - 230px)" : "calc(100vw - 50px)",
+            }}
           >
             <div
               className="w-full flex text-white px-10 bg-gray-900 bg-opacity-95"

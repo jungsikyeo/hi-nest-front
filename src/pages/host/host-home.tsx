@@ -22,6 +22,7 @@ import {
 } from "../../__generated__/createPodcastMutation";
 import { MyProfile } from "../common/my-profile";
 import { notifyInfo, notifySuccess } from "../listener/detail-subscription";
+import {isIE} from "react-device-detect";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -57,9 +58,11 @@ export const HostHome = () => {
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
   const [searchText, setSearchText] = useState("");
-  const [leftState, setLeftState] = useState(false);
+  const [leftState, setLeftState] = useState(true);
   const toggleLeftState = () => setLeftState((leftState) => !leftState);
-
+  if (isIE) {
+    toggleLeftState();
+  }
   const history = useHistory();
   const onCompleted = (data: createPodcastMutation) => {
     const {

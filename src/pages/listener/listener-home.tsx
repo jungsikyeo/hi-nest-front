@@ -3,7 +3,12 @@ import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
 import spotifyLogoWhite from "../../images/spotify_logo_white.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faBars, faHome, faSearch, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faHome,
+  faSearch,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import { gql, useQuery } from "@apollo/client";
 import { PODCAST_FRAGMENT } from "../../fragments";
 import { Search } from "../common/search";
@@ -11,6 +16,7 @@ import { MySubscriptions } from "./my-subscriptions";
 import { DetailSubscription } from "./detail-subscription";
 import { MyProfile } from "../common/my-profile";
 import { SearchPodcasts } from "./search-podcasts";
+import { isIE } from "react-device-detect";
 
 export const GET_ALL_PODCASTS_QUERY = gql`
   query GetAllPodcasts {
@@ -33,8 +39,11 @@ export const ListenerHome = () => {
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
   const [searchText, setSearchText] = useState("");
-  const [leftState, setLeftState] = useState(false);
+  const [leftState, setLeftState] = useState(true);
   const toggleLeftState = () => setLeftState((leftState) => !leftState);
+  if (isIE) {
+    toggleLeftState();
+  }
 
   return (
     <div className="bg-gradient-to-b from-gray-800 to-black text-gray-500">
@@ -60,8 +69,8 @@ export const ListenerHome = () => {
                   </Link>
                   <a onClick={toggleLeftState} className="cursor-pointer pr-5">
                     <FontAwesomeIcon
-                        icon={faTimes}
-                        className="text-2xl text-white hover:text-green-500"
+                      icon={faTimes}
+                      className="text-2xl text-white hover:text-green-500"
                     />
                   </a>
                 </div>

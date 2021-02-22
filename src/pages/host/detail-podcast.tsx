@@ -5,10 +5,9 @@ import { EditPodcast } from "./edit-podcast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import {
-  SearchApiEpisodes,
-} from "../../components/search-api-episodes";
+import { SearchApiEpisodes } from "../../components/search-api-episodes";
 import { Thumbnail } from "../../components/thumbnail";
+import playIcon from "../../images/play.svg";
 
 interface IPodcast {
   id: number;
@@ -38,6 +37,11 @@ export const DetailPodcast = (props: any) => {
       });
   };
 
+  const onPlaying = () => {
+    const trackList = podcast?.episodes.map((episodes: any) => episodes.playId);
+    props.tracks(trackList);
+  };
+
   return (
     <div className="w-full py-5 px-10" style={{ minWidth: "500px" }}>
       <div className="w-full h-52 flex items-end">
@@ -59,6 +63,19 @@ export const DetailPodcast = (props: any) => {
       <div>
         <div className="w-full">
           <div className="flex flex-col">
+            <section className="py-7">
+              <div
+                className="flex items-center justify-center w-14 h-14 rounded-full"
+                style={{ backgroundColor: "#1db954" }}
+              >
+                <button
+                  onClick={onPlaying}
+                  className="outline-none focus:outline-none"
+                >
+                  <img src={playIcon} alt="play" />
+                </button>
+              </div>
+            </section>
             <section
               className="grid gap-4 grid-cols-4 text-xs h-15 border-b border-solid border-gray-700 border-opacity-50 pt-5 pb-2"
               style={{

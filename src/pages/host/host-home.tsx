@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   faHome,
   faSearch,
@@ -24,6 +24,8 @@ import {
 import { MyProfile } from "../common/my-profile";
 import { notifyInfo, notifySuccess } from "../listener/detail-subscription";
 import { isMobile } from "react-device-detect";
+import SpotifyPlayer from "react-spotify-web-playback";
+import axios from "axios";
 
 export interface IUpdatePodcastForm {
   id: number;
@@ -54,12 +56,20 @@ const CREATE_PODCAST_MUTATION = gql`
   }
 `;
 
+const getApiToken = () => {
+  return axios.get(
+    "https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/callback"
+  );
+};
+
 export const HostHome = () => {
   let { data: podcasts } = useQuery(PODCAST_QUERY);
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
   const [searchText, setSearchText] = useState("");
-  const [leftState, setLeftState] = useState(() =>  !isMobile);
+  const [token, setToken] = useState("");
+  const [trackList, setTrackList] = useState([]);
+  const [leftState, setLeftState] = useState(() => !isMobile);
   const toggleLeftState = () => setLeftState((leftState) => !leftState);
   const history = useHistory();
   const onCompleted = (data: createPodcastMutation) => {
@@ -99,6 +109,13 @@ export const HostHome = () => {
       });
     }
   };
+
+  useEffect(() => {
+    getApiToken().then(({ data }) => {
+      console.log(data);
+      setToken(data);
+    });
+  }, [token]);
 
   return (
     <div className="bg-gradient-to-b from-gray-800 to-black text-gray-500">
@@ -238,7 +255,10 @@ export const HostHome = () => {
             >
               {path === "my-profile" && <MyProfile />}
               {path === "podcasts" && (
-                <DetailPodcast data={{ podcasts, paramId }} />
+                <DetailPodcast
+                  data={{ podcasts, paramId }}
+                  tracks={setTrackList}
+                />
               )}
               {path !== "my-profile" && path !== "podcasts" && (
                 <MyPodcasts data={podcasts} text={searchText} />
@@ -250,7 +270,29 @@ export const HostHome = () => {
           className="bg-black text-white flex items-center justify-center"
           style={{ height: "80px" }}
         >
-          <span>player comming soon....</span>
+          {token !== "" && trackList.length > 0 ? (
+            <SpotifyPlayer
+              token={token}
+              uris={trackList}
+              autoPlay={true}
+              persistDeviceSelection={false}
+              styles={{
+                activeColor: "#fff",
+                bgColor: "#333",
+                color: "#fff",
+                loaderColor: "#fff",
+                sliderColor: "#1cb954",
+                trackArtistColor: "#ccc",
+                trackNameColor: "#fff",
+              }}
+            />
+          ) : (
+            <>
+              <button onClick={getApiToken}>
+                <span>플레이어가 대기중입니다. 재생버튼을 눌러주세요.</span>
+              </button>
+            </>
+          )}
         </footer>
       </div>
     </div>

@@ -71,6 +71,11 @@ export const DetailSubscription = (props: any) => {
     (podcast: IPodcast) => podcast.id === +props.data.paramId
   );
 
+  const onPlaying = () => {
+    const trackList = podcast?.episodes.map((episodes: any) => episodes.playId);
+    props.tracks(trackList);
+  };
+
   const onCompleted = (data: ChangeSubscribeMutation) => {
     const {
       changeSubscribe: { ok },
@@ -135,7 +140,12 @@ export const DetailSubscription = (props: any) => {
                   className="flex items-center justify-center w-14 h-14 rounded-full"
                   style={{ backgroundColor: "#1db954" }}
                 >
-                  <img src={playIcon} alt="play" />
+                  <button
+                    onClick={onPlaying}
+                    className="outline-none focus:outline-none"
+                  >
+                    <img src={playIcon} alt="play" />
+                  </button>
                 </div>
                 {subscription ? (
                   <div

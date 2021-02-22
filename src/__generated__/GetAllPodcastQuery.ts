@@ -13,6 +13,7 @@ export interface GetAllPodcastQuery_getAllPodcasts_podcasts_episodes {
   title: string;
   category: string;
   imageUrl: string | null;
+  playTime: number | null;
 }
 
 export interface GetAllPodcastQuery_getAllPodcasts_podcasts {

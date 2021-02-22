@@ -32,7 +32,6 @@ export const DetailPodcast = (props: any) => {
     axios
       .get(
         `https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/auth?searchText=${e.target.value}`
-        //"http://localhost:4000/spotify/api/auth?searchText=%EC%86%8C%EB%85%80%EC%8B%9C%EB%8C%80"
       )
       .then(({ data }) => {
         setSearchItems(data.episodes);
@@ -73,7 +72,7 @@ export const DetailPodcast = (props: any) => {
               <span>재생시간</span>
             </section>
             {podcast?.episodes.map((episode: any, index: number) => (
-              <Episodes data={{ episode, index }} />
+              <Episodes key={index} data={{ episode, index }} />
             ))}
             <div className="pb-5 border-t border-solid border-gray-700 border-opacity-50">
               {" "}

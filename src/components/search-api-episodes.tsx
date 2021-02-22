@@ -6,13 +6,13 @@ import { PODCAST_QUERY } from "../pages/host/host-home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  createEpisodeMutation,
-  createEpisodeMutationVariables,
-} from "../__generated__/createEpisodeMutation";
-import {
   notifyInfo,
   notifySuccess,
 } from "../pages/listener/detail-subscription";
+import {
+  createEpisodeMutation,
+  createEpisodeMutationVariables,
+} from "../__generated__/createEpisodeMutation";
 
 export interface IEpisode {
   podcastId: number;
@@ -20,6 +20,7 @@ export interface IEpisode {
   category: string;
   imageUrl?: string;
   playTime?: number;
+  playId: string;
 }
 
 const CREATE_EPISODE_MUTATION = gql`
@@ -66,6 +67,7 @@ export const SearchApiEpisodes = (props: any) => {
       const category = episode.category;
       const imageUrl = episode.imageUrl;
       const playTime = episode.playTime;
+      const playId = episode.playId;
 
       notifyInfo(<div className={`text-sm`}>플레이리스트에 추가합니다.</div>);
 
@@ -77,6 +79,7 @@ export const SearchApiEpisodes = (props: any) => {
             category,
             imageUrl,
             playTime,
+            playId,
           },
         },
       });

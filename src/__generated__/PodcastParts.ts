@@ -13,6 +13,7 @@ export interface PodcastParts_episodes {
   title: string;
   category: string;
   imageUrl: string | null;
+  playTime: number | null;
 }
 
 export interface PodcastParts {

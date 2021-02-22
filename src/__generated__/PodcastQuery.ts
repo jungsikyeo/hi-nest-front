@@ -13,6 +13,7 @@ export interface PodcastQuery_myPodcasts_podcasts_episodes {
   title: string;
   category: string;
   imageUrl: string | null;
+  playTime: number | null;
 }
 
 export interface PodcastQuery_myPodcasts_podcasts {

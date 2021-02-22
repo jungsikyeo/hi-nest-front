@@ -12,6 +12,7 @@ export const PODCAST_FRAGMENT = gql`
       category
       imageUrl
       playTime
+      playId
     }
   }
 `;

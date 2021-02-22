@@ -27,6 +27,7 @@ export interface CreateEpisodeInput {
   category: string;
   imageUrl?: string | null;
   playTime?: number | null;
+  playId?: string | null;
   podcastId: number;
 }
 

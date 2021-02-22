@@ -15,6 +15,7 @@ import {
   deletePodcastMutation,
   deletePodcastMutationVariables,
 } from "../../__generated__/deletePodcastMutation";
+import { Thumbnail } from "../../components/thumbnail";
 
 const UPDATE_PODCAST_MUTATION = gql`
   mutation updatePodcastMutation($updatePodcastInput: UpdatePodcastInput!) {
@@ -132,11 +133,7 @@ export const EditPodcast = (props: any) => {
             </div>
             <div className="w-full h-3/5 px-5 flex justify-between">
               <div className="w-1/2 h-full">
-                <img
-                  src={podcastDefault}
-                  className="w-full h-full bg-gray-700"
-                  alt="thumnail"
-                />
+                <Thumbnail data={podcast} />
               </div>
               <div className="w-1/2 h-full pl-5 flex flex-col">
                 <div className="relative h-1/5 mb-2">

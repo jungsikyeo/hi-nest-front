@@ -13,6 +13,7 @@ export interface SubscriptionsQuery_subscriptions_episodes {
   title: string;
   category: string;
   imageUrl: string | null;
+  playTime: number | null;
 }
 
 export interface SubscriptionsQuery_subscriptions {

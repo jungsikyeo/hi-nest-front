@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useLocation } from "react-router-dom";
 import spotifyLogoWhite from "../../images/spotify_logo_white.svg";
@@ -17,6 +17,8 @@ import { DetailSubscription } from "./detail-subscription";
 import { MyProfile } from "../common/my-profile";
 import { SearchPodcasts } from "./search-podcasts";
 import { isMobile } from "react-device-detect";
+import SpotifyPlayer from "react-spotify-web-playback";
+import axios, { AxiosResponse } from "axios";
 
 export const GET_ALL_PODCASTS_QUERY = gql`
   query GetAllPodcasts {
@@ -34,7 +36,23 @@ export const GET_ALL_PODCASTS_QUERY = gql`
   ${PODCAST_FRAGMENT}
 `;
 
+const getApiToken = () => {
+  return axios.get(
+    "https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/callback"
+  );
+};
+
 export const ListenerHome = () => {
+  const [token, setToken] = useState("");
+  const [trackList, setTrackList] = useState([]);
+
+  useEffect(() => {
+    getApiToken().then(({ data }) => {
+      console.log(data);
+      setToken(data);
+    });
+  }, [token]);
+
   let { data: podcasts } = useQuery(GET_ALL_PODCASTS_QUERY);
   const location = useLocation();
   const [, path, paramId] = location.pathname.split("/");
@@ -154,7 +172,10 @@ export const ListenerHome = () => {
             >
               {path === "my-profile" && <MyProfile />}
               {path === "podcasts" && (
-                <DetailSubscription data={{ podcasts, paramId }} />
+                <DetailSubscription
+                  data={{ podcasts, paramId }}
+                  tracks={setTrackList}
+                />
               )}
               {path === "search" && (
                 <SearchPodcasts data={podcasts} text={searchText} />
@@ -171,7 +192,29 @@ export const ListenerHome = () => {
           className="bg-black text-white flex items-center justify-center"
           style={{ height: "80px" }}
         >
-          <span>player comming soon....</span>
+          {token !== "" && trackList.length > 0 ? (
+            <SpotifyPlayer
+              token={token}
+              uris={trackList}
+              autoPlay={true}
+              persistDeviceSelection={false}
+              styles={{
+                activeColor: "#fff",
+                bgColor: "#333",
+                color: "#fff",
+                loaderColor: "#fff",
+                sliderColor: "#1cb954",
+                trackArtistColor: "#ccc",
+                trackNameColor: "#fff",
+              }}
+            />
+          ) : (
+            <>
+              <button onClick={getApiToken}>
+                <span>플레이어가 대기중입니다. 재생버튼을 눌러주세요.</span>
+              </button>
+            </>
+          )}
         </footer>
       </div>
     </div>

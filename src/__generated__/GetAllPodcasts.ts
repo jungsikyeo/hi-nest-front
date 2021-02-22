@@ -13,6 +13,7 @@ export interface GetAllPodcasts_getAllPodcasts_podcasts_episodes {
   title: string;
   category: string;
   imageUrl: string | null;
+  playTime: number | null;
 }
 
 export interface GetAllPodcasts_getAllPodcasts_podcasts {
@@ -37,6 +38,7 @@ export interface GetAllPodcasts_subscriptions_episodes {
   title: string;
   category: string;
   imageUrl: string | null;
+  playTime: number | null;
 }
 
 export interface GetAllPodcasts_subscriptions {

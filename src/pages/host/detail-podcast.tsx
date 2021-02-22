@@ -19,6 +19,7 @@ interface IPodcast {
 
 export const DetailPodcast = (props: any) => {
   const [searchItems, setSearchItems] = useState([]);
+  const [nextUrl, setNextUrl] = useState("");
   const podcast: IPodcast = props.data.podcasts?.myPodcasts.podcasts.find(
     (podcast: IPodcast) => podcast.id === +props.data.paramId
   );
@@ -34,7 +35,18 @@ export const DetailPodcast = (props: any) => {
       )
       .then(({ data }) => {
         setSearchItems(data.episodes);
+        setNextUrl(
+          `https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/auth?searchText=${
+            data.nextUrl?.split("?query=")[1]
+          }`
+        );
       });
+  };
+
+  const onNextSearchApiText = () => {
+    axios.get(`${nextUrl}`).then(({ data }) => {
+      setSearchItems(searchItems.concat(data.episodes));
+    });
   };
 
   const onPlaying = () => {
@@ -115,6 +127,20 @@ export const DetailPodcast = (props: any) => {
             {searchItems?.map((episode, index) => (
               <SearchApiEpisodes data={{ episode, index }} />
             ))}
+            {nextUrl !== "" && (
+              <button
+                onClick={onNextSearchApiText}
+                className="text-white font-bold outline-none focus:outline-none flex items-center justify-center"
+              >
+                <div
+                  className="w-full h-15 text-sm
+                  hover:border hover:border-gray-500 hover:border-opacity-90
+                  hover:bg-gray-500 hover:bg-opacity-20 rounded-md pl-5 py-2"
+                >
+                  ... more ...
+                </div>
+              </button>
+            )}
           </div>
         </div>
       </div>

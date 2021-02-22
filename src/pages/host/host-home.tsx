@@ -112,7 +112,6 @@ export const HostHome = () => {
 
   useEffect(() => {
     getApiToken().then(({ data }) => {
-      console.log(data);
       setToken(data);
     });
   }, [token]);

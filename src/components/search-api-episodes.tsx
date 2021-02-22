@@ -133,17 +133,19 @@ export const SearchApiEpisodes = (props: any) => {
           <a onClick={onCreateEpisode}>
             <span className="text-white text-xs font-bold">추가하기</span>
           </a>
-          <ToastContainer
-            position="bottom-center"
-            autoClose={3000}
-            hideProgressBar
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
+          {index === 1 && (
+            <ToastContainer
+              position="bottom-center"
+              autoClose={3000}
+              hideProgressBar
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+          )}
         </div>
       </div>
     </section>

@@ -30,7 +30,7 @@ export const MyProfile = () => {
 
   const podcasts =
     me?.me.role === "Host" ? data?.myPodcasts.podcasts : data.subscriptions;
-  console.log(podcasts);
+
   return (
     <div
       className="w-full py-5 px-10 text-gray-500"

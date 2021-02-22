@@ -48,7 +48,6 @@ export const ListenerHome = () => {
 
   useEffect(() => {
     getApiToken().then(({ data }) => {
-      console.log(data);
       setToken(data);
     });
   }, [token]);

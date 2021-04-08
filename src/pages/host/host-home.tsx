@@ -58,7 +58,7 @@ const CREATE_PODCAST_MUTATION = gql`
 
 const getApiToken = () => {
   return axios.get(
-    "https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/callback"
+    "https://spotify-clone-backend.herokuapp.com/spotify/api/callback"
   );
 };
 

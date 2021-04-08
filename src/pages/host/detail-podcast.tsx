@@ -31,12 +31,12 @@ export const DetailPodcast = (props: any) => {
   const onChangeSearchApiText = (e: any) => {
     axios
       .get(
-        `https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/auth?searchText=${e.target.value}`
+        `https://spotify-clone-backend.herokuapp.com/spotify/api/auth?searchText=${e.target.value}`
       )
       .then(({ data }) => {
         setSearchItems(data.episodes);
         setNextUrl(
-          `https://nuber-eats-yjs-backend.herokuapp.com/spotify/api/auth?searchText=${
+          `https://spotify-clone-backend.herokuapp.com/spotify/api/auth?searchText=${
             data.nextUrl?.split("?query=")[1]
           }`
         );
